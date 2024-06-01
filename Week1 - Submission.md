@@ -12,6 +12,20 @@
 Here are at least one deployed HelloWorld contract:
 - 0xC55433CD5b7aA03E3b74568aFE3Ce5c612Ce63EB
 
+### Interface 
+
+```solidity
+interface HelloWorldInterface {
+
+    function helloWorld() external view returns (string memory) ;
+
+    function setText(string calldata newText) external  ;
+
+    function transferOwnership(address newOwner) external  ;
+    
+}
+```
+
 ## Report
 
 - Deploying one contract: https://sepolia.etherscan.io/tx/0x9383e6610a24d6b65e77d367e08f5c6cf2da9fe8f89a586cea9bbde4139fc738
