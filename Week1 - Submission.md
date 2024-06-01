@@ -5,7 +5,7 @@
 - AIAwTO -  @Detergent - Address: 
 - 4hO1fl - @Nicolas Beaudouin - Address: 0xC6CbDd7D90458c5e1003DdE243bF1561efAeE516
 - LFKRoI - @lakunle - Address: 
-- KPkomO - @kvngeko.eth - Address: 
+- KPkomO - @kvngeko.eth - Address: 0x8f731049CfE57d67E8c1507B78A41E6EC8cD0731
 - bA101G - @Robert - Address: 
 
 ## Contracts
@@ -32,3 +32,5 @@ interface HelloWorldInterface {
   - Calling helloWorld gives : "Hello World!"
 - Call SetText method : https://sepolia.etherscan.io/tx/0xe47cc314f7d43f543213826aebb05b100228559d7d24801e5103ec72762350ff
   - Calling helloWorld gives : "Hello from Nico !"
+- Call TransferOwnership to "0x8f731049CfE57d67E8c1507B78A41E6EC8cD0731" : https://sepolia.etherscan.io/tx/0x18d501c7138bcf9dbb1bc424a5ca396c220de244a1d72f27dafa254d554888f8
+- Call SetText method fails from previous owner: https://sepolia.etherscan.io/tx/0x180f49a617e892a9d3929329ab7b38239c3da039a64a1a9aa95a94c01bc645ad  
