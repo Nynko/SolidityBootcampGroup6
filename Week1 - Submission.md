@@ -44,5 +44,6 @@ interface HelloWorldInterface {
 - Call SetText method (Detergent): https://sepolia.etherscan.io/tx/0x4c60fc28a0fd96c83e7c50f48ec78b6a45fb57bd8569f4d2b0579bc063d229a5
     - Calling helloWorld gives : "Kifal"
 - TransferOwnership (Detergent) to "0x9d1aAF184154E9d6Fc7d138Ee560134732427f7E" (Robert) : https://sepolia.etherscan.io/tx/0x4c36fa61e935028469e18df2301b9e6f9dc055860bcbda9f4066267e50501c8b
-- 
-
+- Call SetText method (Robert) : https://sepolia.etherscan.io/tx/0x1e17826fa431580604afbf5ff09c7305997201ae650008f8942a779d09bf807b
+    - Calling helloWorld gives : "Robert has been here"
+- TransferOwnership (Robert) to "0xe046945f31e7510588155138cc9a62838c635108" (lakunle) : https://sepolia.etherscan.io/tx/0x507d2d4c75c9189a5682114fecc7ca3569fc553872aff60ff46f992f6e1a0c84
