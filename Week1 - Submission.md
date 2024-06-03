@@ -10,7 +10,8 @@
 
 ## Contracts
 Here are at least one deployed HelloWorld contract:
-- 0x46Bdb5448Adf36a6C3856cdA2Df649961eE7981f
+- 0x46Bdb5448Adf36a6C3856cdA2Df649961eE7981f (Nico)
+- 0x09023c24A1a8742AE2bE27A3B749b89b5c6eb442 (Detergent)
 
 ### Interface 
 
