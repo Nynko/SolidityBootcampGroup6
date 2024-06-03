@@ -2,7 +2,7 @@
 
 ## Users and addresses
 
-- AIAwTO -  @Detergent - Address: 
+- AIAwTO -  @Detergent - Address: 0x46Bec6C328eDA6A432A45b9c0c598A1A6e15C4d3 
 - 4hO1fl - @Nicolas Beaudouin - Address: 0xC6CbDd7D90458c5e1003DdE243bF1561efAeE516
 - LFKRoI - @lakunle - Address: 
 - KPkomO - @kvngeko.eth - Address: 0x8f731049CfE57d67E8c1507B78A41E6EC8cD0731
