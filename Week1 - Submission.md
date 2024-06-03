@@ -35,3 +35,6 @@ interface HelloWorldInterface {
 - Call TransferOwnership (Nicolas) to "0x8f731049CfE57d67E8c1507B78A41E6EC8cD0731" (kvngeko.eth): https://sepolia.etherscan.io/tx/0x18d501c7138bcf9dbb1bc424a5ca396c220de244a1d72f27dafa254d554888f8
 - Call SetText method **fails** from previous owner (Nicolas): https://sepolia.etherscan.io/tx/0x180f49a617e892a9d3929329ab7b38239c3da039a64a1a9aa95a94c01bc645ad
 - Call SetText method **fails** from other address than owner (Robert): https://sepolia.etherscan.io/tx/0x138d7591280368f342284d8cd49c3638b29e99929666568de702d5cb6c0f509b
+- Call SetText method from new owner (kvngeko.eth) : https://sepolia.etherscan.io/tx/0x7a278f0f73d34671301d3af2beab65c4bca6fcd3bac5764dde6f090b04ae4a48
+    - Calling helloWorld gives : "Hello from KvngEko.eth"
+- Call TransferOwnership (kvngeko.eth) to "0x46Bec6C328eDA6A432A45b9c0c598A1A6e15C4d3" (Detergent): https://sepolia.etherscan.io/tx/0x9cac39f7d1fbe4c7cfb783d0c05b9d9b44e7ecbf9cef4f180bd596c8d8972c7c
