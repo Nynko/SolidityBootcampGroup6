@@ -6,7 +6,7 @@
 - 4hO1fl - @Nicolas Beaudouin - Address: 0xC6CbDd7D90458c5e1003DdE243bF1561efAeE516
 - LFKRoI - @lakunle - Address: 
 - KPkomO - @kvngeko.eth - Address: 0x8f731049CfE57d67E8c1507B78A41E6EC8cD0731
-- bA101G - @Robert - Address: 
+- bA101G - @Robert - Address: 0x9d1aAF184154E9d6Fc7d138Ee560134732427f7E
 
 ## Contracts
 Here are at least one deployed HelloWorld contract:
