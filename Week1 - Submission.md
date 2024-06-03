@@ -11,7 +11,7 @@
 ## Contracts
 Here are at least one deployed HelloWorld contract:
 - 0x46Bdb5448Adf36a6C3856cdA2Df649961eE7981f (Nico)
-- 0x09023c24A1a8742AE2bE27A3B749b89b5c6eb442 (Detergent)
+- 0x99c2c3a109e2b3158425051b5723c429d83c0515 (Detergent)
 
 ### Interface 
 
@@ -39,3 +39,10 @@ interface HelloWorldInterface {
 - Call SetText method from new owner (kvngeko.eth) : https://sepolia.etherscan.io/tx/0x7a278f0f73d34671301d3af2beab65c4bca6fcd3bac5764dde6f090b04ae4a48
     - Calling helloWorld gives : "Hello from KvngEko.eth"
 - Call TransferOwnership (kvngeko.eth) to "0x46Bec6C328eDA6A432A45b9c0c598A1A6e15C4d3" (Detergent): https://sepolia.etherscan.io/tx/0x9cac39f7d1fbe4c7cfb783d0c05b9d9b44e7ecbf9cef4f180bd596c8d8972c7c
+
+- Dploying another contract (Detergent): https://sepolia.etherscan.io/tx/0x479c7b989631aaa86db0da002c42922756303806129ae96fd9b002ab647e0c99
+- Call SetText method (Detergent): https://sepolia.etherscan.io/tx/0x4c60fc28a0fd96c83e7c50f48ec78b6a45fb57bd8569f4d2b0579bc063d229a5
+    - Calling helloWorld gives : "Kifal"
+- TransferOwnership (Detergent) to "0x9d1aAF184154E9d6Fc7d138Ee560134732427f7E" (Robert) : https://sepolia.etherscan.io/tx/0x4c36fa61e935028469e18df2301b9e6f9dc055860bcbda9f4066267e50501c8b
+- 
+
