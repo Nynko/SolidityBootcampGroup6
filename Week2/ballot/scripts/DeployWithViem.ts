@@ -12,6 +12,8 @@ import { sepolia } from "viem/chains";
 import * as dotenv from "dotenv";
 dotenv.config();
 
+
+
 const providerApiKey = process.env.INFURA_API_KEY || "";
 const deployerPrivateKey = process.env.PRIVATE_KEY || "";
 
