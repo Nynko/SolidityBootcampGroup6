@@ -10,7 +10,7 @@ import { abi } from "../artifacts/contracts/Ballot.sol/Ballot.json";
 import { load_account_from_env, load_api_sepolia } from "../utils/load_env";
 
 const { url: apiUrl } = load_api_sepolia();
-const [deployerAccount] = load_account_from_env();
+const [account] = load_account_from_env();
 
 async function main() {
   const parameters = process.argv.slice(2);
@@ -30,7 +30,7 @@ async function main() {
   console.log("Last block number:", blockNumber);
 
   const walletClient = createWalletClient({
-    account: deployerAccount,
+    account,
     chain: sepolia,
     transport: http(apiUrl),
   });
