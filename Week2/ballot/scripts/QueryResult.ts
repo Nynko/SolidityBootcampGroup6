@@ -26,20 +26,19 @@ async function main() {
         transport: http(apiUrl),
     });
 
-    for (let i = 0; i < 3; i++) {
-        const proposal = (await publicClient.readContract({
-            address: contractAddress,
-            abi,
-            functionName: "proposals",
-            args: [BigInt(i)],
-        })) as any[];
+    const voteCount = await publicClient.readContract({
+        address: contractAddress,
+        abi,
+        functionName: "winningProposal",
+    });
 
-        const name = hexToString(proposal[0], { size: 32 });
-        const voteCount = proposal[1];
+    const winnerName = await publicClient.readContract({
+        address: contractAddress,
+        abi,
+        functionName: "winnerName",
+    });
 
-        console.log(`Name: ${name} Vote Count: ${voteCount}`);
-    }
-
+    console.log(`Name: ${winnerName} Vote Count: ${voteCount}`);
 }
 
 main().catch((error) => {
