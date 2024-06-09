@@ -7,11 +7,18 @@ const PROPOSALS = ["Proposal 1", "Proposal 2", "Proposal 3"];
 
 async function deployContract() {
   const publicClient = await viem.getPublicClient();
-  const [deployer, otherAccount] = await viem.getWalletClients();
+  const [deployer, otherAccount, otherSecondAccount] =
+    await viem.getWalletClients();
   const ballotContract = await viem.deployContract("Ballot", [
     PROPOSALS.map((prop) => toHex(prop, { size: 32 })),
   ]);
-  return { publicClient, deployer, otherAccount, ballotContract };
+  return {
+    publicClient,
+    deployer,
+    otherAccount,
+    otherSecondAccount,
+    ballotContract,
+  };
 }
 
 describe("Ballot", async () => {
@@ -48,23 +55,70 @@ describe("Ballot", async () => {
 
   describe("when the chairperson interacts with the giveRightToVote function in the contract", async () => {
     it("gives right to vote for another address", async () => {
-      // TODO
-      throw Error("Not implemented");
+      const { ballotContract, otherAccount } = await loadFixture(
+        deployContract
+      );
+      const voterBefore = await ballotContract.read.voters([
+        otherAccount.account.address,
+      ]);
+
+      expect(voterBefore[0]).to.equals(0n);
+      await ballotContract.write.giveRightToVote([
+        otherAccount.account.address,
+      ]);
+      const voter = await ballotContract.read.voters([
+        otherAccount.account.address,
+      ]);
+      expect(voter[0]).to.equals(1n);
     });
     it("can not give right to vote for someone that has voted", async () => {
-      // TODO
-      throw Error("Not implemented");
+      const { ballotContract, otherAccount } = await loadFixture(
+        deployContract
+      );
+
+      await ballotContract.write.giveRightToVote([
+        otherAccount.account.address,
+      ]);
+
+      await ballotContract.write.vote([0n], {
+        account: otherAccount.account.address,
+      });
+
+      await expect(
+        ballotContract.write.giveRightToVote([otherAccount.account.address])
+      ).to.be.rejectedWith("The voter already voted.");
     });
     it("can not give right to vote for someone that has already voting rights", async () => {
-      // TODO
-      throw Error("Not implemented");
+      const { ballotContract, otherAccount } = await loadFixture(
+        deployContract
+      );
+
+      await ballotContract.write.giveRightToVote([
+        otherAccount.account.address,
+      ]);
+
+      await expect(
+        ballotContract.write.giveRightToVote([otherAccount.account.address])
+      ).to.be.rejected;
     });
   });
 
   describe("when the voter interacts with the vote function in the contract", async () => {
     // TODO
     it("should register the vote", async () => {
-      throw Error("Not implemented");
+      const { ballotContract, deployer } = await loadFixture(deployContract);
+
+      await ballotContract.write.vote([0n], {
+        account: deployer.account.address,
+      });
+
+      const vote = await ballotContract.read.voters([deployer.account.address]);
+
+      expect(vote[1]).to.equals(true);
+
+      const proposal0 = await ballotContract.read.proposals([0n]);
+
+      expect(proposal0[1]).to.equals(1n);
     });
   });
 
