@@ -9,13 +9,10 @@ import {
 import { privateKeyToAccount } from "viem/accounts";
 import { abi, bytecode } from "../artifacts/contracts/Ballot.sol/Ballot.json";
 import { sepolia } from "viem/chains";
-import * as dotenv from "dotenv";
-dotenv.config();
+import { load_account_from_env, load_api_sepolia } from "../utils/load_env";
 
-
-
-const providerApiKey = process.env.INFURA_API_KEY || "";
-const deployerPrivateKey = process.env.PRIVATE_KEY || "";
+const { url: apiUrl } = load_api_sepolia();
+const [deployerAccount] = load_account_from_env();
 
 async function main() {
   const proposals = process.argv.slice(2);
@@ -23,16 +20,15 @@ async function main() {
     throw new Error("Proposals not provided");
   const publicClient = createPublicClient({
     chain: sepolia,
-    transport: http(`https://sepolia.infura.io/v3/${providerApiKey}`),
+    transport: http(apiUrl),
   });
   const blockNumber = await publicClient.getBlockNumber();
   console.log("Last block number:", blockNumber);
 
-  const account = privateKeyToAccount(`0x${deployerPrivateKey}`);
   const deployer = createWalletClient({
-    account,
+    account: deployerAccount,
     chain: sepolia,
-    transport: http(`https://sepolia.infura.io/v3/${providerApiKey}`),
+    transport: http(apiUrl),
   });
   console.log("Deployer address:", deployer.account.address);
   const balance = await publicClient.getBalance({
