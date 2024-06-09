@@ -32,13 +32,15 @@ async function main() {
         functionName: "winningProposal",
     });
 
-    const winnerName = await publicClient.readContract({
+    const winnerName: any = await publicClient.readContract({
         address: contractAddress,
         abi,
         functionName: "winnerName",
     });
 
-    console.log(`Name: ${winnerName} Vote Count: ${voteCount}`);
+    const name = hexToString(winnerName, { size: 32 })
+
+    console.log(`Name: ${name} Vote Count: ${voteCount}`);
 }
 
 main().catch((error) => {
