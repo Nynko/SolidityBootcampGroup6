@@ -9,11 +9,10 @@ import {
 import { privateKeyToAccount } from "viem/accounts";
 import { abi, bytecode } from "../artifacts/contracts/Ballot.sol/Ballot.json";
 import { sepolia } from "viem/chains";
-import * as dotenv from "dotenv";
-dotenv.config();
+import { load_account_from_env, load_api_sepolia } from "../utils/load_env";
 
-const providerApiKey = process.env.INFURA_API_KEY || "";
-const deployerPrivateKey = process.env.PRIVATE_KEY || "";
+const { url: apiUrl } = load_api_sepolia();
+const [account] = load_account_from_env();
 
 async function main() {
   const parameters = process.argv.slice(2);
@@ -28,7 +27,7 @@ async function main() {
   console.log("Proposal selected: ");
   const publicClient = createPublicClient({
     chain: sepolia,
-    transport: http(`https://sepolia.infura.io/v3/${providerApiKey}`),
+    transport: http(apiUrl),
   });
   const proposal = (await publicClient.readContract({
     address: contractAddress,
@@ -40,11 +39,10 @@ async function main() {
   console.log("Voting to proposal", name);
   console.log("Confirm? (Y/n)");
   const stdin = process.stdin.resume();
-  const account = privateKeyToAccount(`0x${deployerPrivateKey}`);
   const voter = createWalletClient({
-    account,
+    account: account,
     chain: sepolia,
-    transport: http(`https://sepolia.infura.io/v3/${providerApiKey}`),
+    transport: http(apiUrl),
   });
   stdin.addListener("data", async function (d) {
     if (d.toString().trim().toLowerCase() != "n") {
