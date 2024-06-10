@@ -10,8 +10,8 @@ Kifal (AIAwTO): [Kifal fork](https://github.com/Kifal15/SolidityBootcampGroup6)
 
 - AIAwTO -  @Detergent - Address: 0x46Bec6C328eDA6A432A45b9c0c598A1A6e15C4d3 
 - 4hO1fl - @Nicolas Beaudouin - Address: 0xC6CbDd7D90458c5e1003DdE243bF1561efAeE516
-- LFKRoI - @lakunle - Address: 0xe046945f31e7510588155138cc9a62838c635108
-- KPkomO - @kvngeko.eth - Address: 0x8f731049CfE57d67E8c1507B78A41E6EC8cD0731
+- LFKRoI - @lakunle - Address: 0xe046945f31e7510588155138cc9a62838c635108 | 0x23e2009fF32160D3357106EAbEe8e09868Ae7FC1
+- KPkomO - @kvngeko.eth - Address: 0x8f731049CfE57d67E8c1507B78A41E6EC8cD0731 | 0x472c1C8D4A26bBa989Bf3B82feFF3BddA39F8380
 - bA101G - @Robert - Address: 0x9d1aAF184154E9d6Fc7d138Ee560134732427f7E
 
 ## Contracts
@@ -26,3 +26,11 @@ Here are at least one deployed contract:
   - 0x9d1aAF184154E9d6Fc7d138Ee560134732427f7E (Robert): https://sepolia.etherscan.io/tx/0x50b7bf38e8f9fd76b0554a32510004a9dad46cb1796565fc1c09e58f23988232
   - 0x46Bec6C328eDA6A432A45b9c0c598A1A6e15C4d3 (Detergent) https://sepolia.etherscan.io/tx/0x9bde5afdeac78df0d15d22f49e0fe2de69796113d80137b2d9545c0f3d54354a
   - 0xC6CbDd7D90458c5e1003DdE243bF1561efAeE516 (Nicolas) https://sepolia.etherscan.io/tx/0xd03be531fb1afae59f7686480bad71939da1757f26b94e462219b158a8c12346
+ 
+- Delegate from 0x8f731049CfE57d67E8c1507B78A41E6EC8cD0731 (kvngeko.eth) to 0x472c1C8D4A26bBa989Bf3B82feFF3BddA39F8380 (kvngeko.eth 2): https://sepolia.etherscan.io/tx/0x343b75879355759c65835c19f722ef12520ae75d2fbf9b41c1d448204b4d71ff
+- Delegate from 0xC6CbDd7D90458c5e1003DdE243bF1561efAeE516 (Nicolas) to 0xE046945f31E7510588155138cc9A62838c635108 (Lakunle 1): https://sepolia.etherscan.io/tx/0x1e46e072af9b99e1f045f8e3f32bc9aa1d168bb9e9d1d0fbec7aaf9a2c007ddf
+  
+- Vote from 0x23e2009fF32160D3357106EAbEe8e09868Ae7FC1 (Lakunle 2) failed because the address doesn't have right to vote: https://sepolia.etherscan.io/tx/0x4e2571ce0604338371f5b32bafcd4a6e4960eb4f9d30fba95b2985842215b7090x23e2009fF32160D3357106EAbEe8e09868Ae7FC1
+- Vote from 0x472c1C8D4A26bBa989Bf3B82feFF3BddA39F8380 (kvngeko.eth 2) for proposal 1 (index 0) : https://sepolia.etherscan.io/tx/0x4fc941da42bbff09108cecd90267c5d54b2c0a21cf2d59eac3b92c3f94a68a94
+  - Running script to query results give: `Winning Proposal Name: proposal 1, Winning Proposal Index: 0, Vote Count: 2` 
+
