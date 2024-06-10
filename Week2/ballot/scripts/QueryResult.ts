@@ -27,6 +27,13 @@ async function main() {
     functionName: "winningProposal",
   });
 
+  const proposal = (await publicClient.readContract({
+    address: contractAddress,
+    abi,
+    functionName: "proposals",
+    args: [winningProposalIndex],
+  })) as [string, bigint];
+
   const winnerName: any = await publicClient.readContract({
     address: contractAddress,
     abi,
@@ -35,7 +42,9 @@ async function main() {
 
   const name = hexToString(winnerName, { size: 32 });
 
-  console.log(`Winning Proposal Name: ${name}, Winning Proposal Index: ${winningProposalIndex}`);
+  console.log(
+    `Winning Proposal Name: ${name}, Winning Proposal Index: ${winningProposalIndex}, Vote Count: ${proposal[1]}`
+  );
 }
 
 main().catch((error) => {
