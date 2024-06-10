@@ -22,6 +22,7 @@ Here are at least one deployed contract:
 
 - Deploying the ballot contract with standards proposals \['Proposal 1', 'Proposal 2', 'Proposal 3'\] (we are not funny guys 😢😛) from 0x8f731049CfE57d67E8c1507B78A41E6EC8cD0731 (kvngeko.eth) : https://sepolia.etherscan.io/address/0x878357c449a6aa94a6b3956f58b430d9ed84ebeb
 - Giving rights to everyone (0x8f731049CfE57d67E8c1507B78A41E6EC8cD0731 - kvngeko.eth):
+  - 0x472c1C8D4A26bBa989Bf3B82feFF3BddA39F8380 (kvngeko.eth 2): https://sepolia.etherscan.io/tx/0x71354e4e9b7d253d6b201079deca8a80d53495045c16816835c72ee5d40e1c15
   - 0xe046945f31e7510588155138cc9a62838c635108 (lakunle): https://sepolia.etherscan.io/tx/0x54bd584d3f69f21cc2250dfa00b4c4847c97e2e0f622bd0bad472575495f28a4
   - 0x9d1aAF184154E9d6Fc7d138Ee560134732427f7E (Robert): https://sepolia.etherscan.io/tx/0x50b7bf38e8f9fd76b0554a32510004a9dad46cb1796565fc1c09e58f23988232
   - 0x46Bec6C328eDA6A432A45b9c0c598A1A6e15C4d3 (Detergent) https://sepolia.etherscan.io/tx/0x9bde5afdeac78df0d15d22f49e0fe2de69796113d80137b2d9545c0f3d54354a
