@@ -18,3 +18,6 @@ ignition/deployments/chain-31337
 
 #MAC OS 
 .DS_Store
+
+#Vscode 
+.vscode
