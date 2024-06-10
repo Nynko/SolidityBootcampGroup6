@@ -34,7 +34,11 @@ Here are at least one deployed contract:
 - Vote from 0x23e2009fF32160D3357106EAbEe8e09868Ae7FC1 (Lakunle 2) failed because the address doesn't have right to vote: https://sepolia.etherscan.io/tx/0x4e2571ce0604338371f5b32bafcd4a6e4960eb4f9d30fba95b2985842215b7090x23e2009fF32160D3357106EAbEe8e09868Ae7FC1
 
 - Vote from 0x472c1C8D4A26bBa989Bf3B82feFF3BddA39F8380 (kvngeko.eth 2) for proposal 1 (index 0) : https://sepolia.etherscan.io/tx/0x4fc941da42bbff09108cecd90267c5d54b2c0a21cf2d59eac3b92c3f94a68a944
-
+ 
+- Delegate from 0xa028353ba28fcd71f6d58e9f48e2466642308e13 (robert) to 0x472c1C8D4A26bBa989Bf3B82feFF3BddA39F8380 (kvngeko.eth 2): 
  https://sepolia.etherscan.io/tx/0x9e40ef5c76c77391433090d40fb1df5779eed66bcdc4eeafdaf0167aae57dbe3
+
+- Vote from 0x9d1aAF184154E9d6Fc7d138Ee560134732427f7E for proposal 1 (index 0) : 
+https://sepolia.etherscan.io/tx/0x7e0ad56dd961aa3a9dd149bc6565388f2980beb4652d919bdfd60b0f4e0e8dcc
   - Running script to query results give: `Winning Proposal Name: proposal 1, Winning Proposal Index: 0, Vote Count: 2` 
 
