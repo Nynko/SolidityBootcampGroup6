@@ -129,5 +129,29 @@ describe("TokenizedBallot", async () => {
       expect(vote1).to.equals(0n);
       expect(vote2).to.equals(MINT_VALUE);
     });
+
+    it("if we transfer after delegation we loose vote power", async () => {
+      const { tokenContract, acc1, acc2 } = await loadFixture(deployContract);
+
+      await delegateTokens(
+        tokenContract.address,
+        acc1.account.address,
+        acc1.account
+      );
+
+      const two = parseEther("2");
+
+      await tokenContract.write.transfer(
+        [acc2.account.address, MINT_VALUE - two],
+        {
+          account: acc1.account,
+        }
+      );
+
+      const vote1 = await tokenContract.read.getVotes([acc1.account.address]);
+      const vote2 = await tokenContract.read.getVotes([acc2.account.address]);
+      expect(vote1).to.equals(two);
+      expect(vote2).to.equals(0n);
+    });
   });
 });
