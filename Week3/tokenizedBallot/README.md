@@ -1,14 +1,23 @@
 # Run scripts
 
-For hardhat scripts:
-(remove --network argument for local, or put localhost instead of sepolia if you want to test it in local)
+## For hardhat scripts without arguments:
+
+(remove --network argument for local)
 
 ```bash
 npx hardhat run ./scripts/<Script.ts> --network sepolia
 ```
 
-For viem scripts:
+## For scripts with arguments:
+
+### For pure Viem script:
 
 ```bash
 npx ts-node --files ./scripts/<Script.ts> args1 args2...
+```
+
+### For hardhat : Adding hardhat network:
+
+```bash
+HARDHAT_NETWORK=sepolia npx ts-node --files ./scripts/<Script.ts> args1 args2...
 ```
