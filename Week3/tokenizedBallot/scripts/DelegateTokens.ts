@@ -8,7 +8,8 @@ export async function delegateTokens(
   account: Account
 ) {
   const tokenContract = await viem.getContractAt("MyToken", contract);
-  tokenContract.write.delegate([addressTo], { account });
+  const hash = tokenContract.write.delegate([addressTo], { account });
+  return hash;
 }
 
 async function main() {
@@ -22,7 +23,8 @@ async function main() {
   const delegateAddress = parameters[1] as `0x${string}`;
   const [account] = load_account_from_env();
 
-  delegateTokens(contractAddress, delegateAddress, account);
+  const hash = delegateTokens(contractAddress, delegateAddress, account);
+  console.log("Delegate tx: ", hash);
 }
 
 main().catch((err) => {
