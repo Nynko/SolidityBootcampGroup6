@@ -19,10 +19,10 @@ async function deployContract() {
     forthAccount,
     fifthAccount,
   ] = await viem.getWalletClients();
-  const ballotContract = await viem.deployContract("tokenizedBallot", [
+  const ballotContract = await viem.deployContract("TokenizedBallot", [
     PROPOSALS.map((prop) => toHex(prop, { size: 32 })),
     deployer.account.address,
-    1,
+    0,
   ]);
   return {
     publicClient,
