@@ -19,10 +19,11 @@ async function deployContract() {
     forthAccount,
     fifthAccount,
   ] = await viem.getWalletClients();
-  const ballotContract = await viem.deployContract("tokenizedBallot", [
+  const tokenContract = await viem.deployContract("MyToken");
+  const tokenizedBallotContract = await viem.deployContract("TokenizedBallot", [
     PROPOSALS.map((prop) => toHex(prop, { size: 32 })),
-    deployer.account.address,
-    1,
+    tokenContract.address,
+    0,
   ]);
   return {
     publicClient,
@@ -32,16 +33,16 @@ async function deployContract() {
     thirdAccount,
     forthAccount,
     fifthAccount,
-    ballotContract,
+    tokenizedBallotContract,
   };
 }
 
 describe("TokenizedBallot", async () => {
   describe("when the contract is deployed", async () => {
     it("has the provided proposals", async () => {
-      const { ballotContract } = await loadFixture(deployContract);
+      const { tokenizedBallotContract } = await loadFixture(deployContract);
       for (let index = 0; index < PROPOSALS.length; index++) {
-        const proposal = (await ballotContract.read.proposals([
+        const proposal = (await tokenizedBallotContract.read.proposals([
           BigInt(index),
         ])) as `0x${string}`[];
         expect(hexToString(proposal[0], { size: 32 })).to.eq(PROPOSALS[index]);
