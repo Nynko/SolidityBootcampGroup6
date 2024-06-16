@@ -27,30 +27,42 @@ async function deployContract() {
     fifthAccount,
   ] = await viem.getWalletClients();
   const tokenContract = await viem.deployContract("MyToken");
-  const tokenizedBallotContract = (await viem.deployContract(
-    "TokenizedBallot",
-    [
-      PROPOSALS.map((prop) => toHex(prop, { size: 32 })),
-      deployer.account.address,
-      0,
-    ]
-  )) as any as TokenizedBallot;
   return {
     publicClient,
+    tokenContract,
     deployer,
     otherAccount,
     otherSecondAccount,
     thirdAccount,
     forthAccount,
     fifthAccount,
-    tokenizedBallotContract,
   };
+}
+
+async function deployBallotContract(
+  blockNumber: number,
+  tokenContractAddress: `0x${string}`
+) {
+  const tokenizedBallotContract = (await viem.deployContract(
+    "TokenizedBallot",
+    [
+      PROPOSALS.map((prop) => toHex(prop, { size: 32 })),
+      tokenContractAddress,
+      blockNumber,
+    ]
+  )) as any as TokenizedBallot;
+
+  return tokenizedBallotContract;
 }
 
 describe("TokenizedBallot", async () => {
   describe("when the contract is deployed", async () => {
     it("has the provided proposals", async () => {
-      const { tokenizedBallotContract } = await loadFixture(deployContract);
+      const { tokenContract } = await loadFixture(deployContract);
+      const tokenizedBallotContract = await deployBallotContract(
+        0,
+        tokenContract.address
+      );
       for (let index = 0; index < PROPOSALS.length; index++) {
         const proposal = await tokenizedBallotContract.read.proposals([
           BigInt(index),
