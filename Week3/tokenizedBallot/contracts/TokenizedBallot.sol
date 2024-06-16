@@ -20,13 +20,14 @@ contract TokenizedBallot {
         bytes32[] memory _proposalNames,
         address _tokenContract,
         uint256 _targetBlockNumber
-    ) {
-        tokenContract = IMyToken(_tokenContract);
-        targetBlockNumber = _targetBlockNumber;
+    ) { 
         require(
             targetBlockNumber < block.number,
             "targetBlockNumber is not in the past"
         );
+        tokenContract = IMyToken(_tokenContract);
+        targetBlockNumber = _targetBlockNumber;
+       
         for (uint i = 0; i < _proposalNames.length; i++) {
             proposals.push(Proposal({name: _proposalNames[i], voteCount: 0}));
         }
