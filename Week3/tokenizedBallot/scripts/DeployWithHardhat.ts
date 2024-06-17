@@ -1,5 +1,5 @@
 import { viem } from "hardhat";
-import { toHex, hexToString, formatEther } from "viem";
+import { formatEther } from "viem";
 import { load_account_from_env } from "../utils/load_env";
 
 async function main() {
@@ -18,12 +18,7 @@ async function main() {
   const tokenContract = await viem.deployContract("MyToken");
 
   console.log("Token contract deployed to:", tokenContract.address);
-  // console.log("Proposals: ");
-  // for (let index = 0; index < PROPOSALS.length; index++) {
-  //   const proposal = await ballotContract.read.proposals([BigInt(index)]);
-  //   const name = hexToString(proposal[0], { size: 32 });
-  //   console.log({ index, name, proposal });
-  // }
+ 
 }
 
 main().catch((error) => {
