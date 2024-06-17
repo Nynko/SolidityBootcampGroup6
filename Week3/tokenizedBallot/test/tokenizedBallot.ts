@@ -11,6 +11,8 @@ import {
   WalletClient,
 } from "@nomicfoundation/hardhat-viem/types";
 import { ArtifactsMap } from "hardhat/types/artifacts";
+import { castVote } from "../scripts/CastVote";
+import { queryResults } from "../scripts/QueryResults";
 
 type TokenizedBallot = GetContractReturnType<
   ArtifactsMap["TokenizedBallot"]["abi"]
@@ -180,6 +182,81 @@ describe("TokenizedBallot", async () => {
       const vote2 = await tokenizedBallotContract.read.getVotePower([acc2.account.address]);
       expect(vote1).to.equals(0n);
       expect(vote2).to.equals(MINT_VALUE);
+    });
+    
+  });
+  describe("Cast Vote", async () => {
+    it("can cast a vote", async () => {
+      const { tokenContract, acc1, publicClient } = await loadFixture(deployContract);
+      await delegateTokens(
+        tokenContract.address,
+        acc1.account.address,
+        acc1.account
+      );
+      const blockNumber = await publicClient.getBlockNumber();
+      const tokenizedBallotContract = await deployBallotContract(blockNumber, tokenContract.address);
+      await castVote(tokenizedBallotContract.address,2n,MINT_VALUE,acc1.account);
+      const vote = await tokenizedBallotContract.read.getVotePower([acc1.account.address]);
+      const proposal = await tokenizedBallotContract.read.proposals([2n]);
+      expect(vote).to.equals(0n);
+      expect(proposal[1]).to.equals(MINT_VALUE);
+    });
+    it("cannot cast a vote higher than vote power", async () => {
+      const { tokenContract, acc1, publicClient } = await loadFixture(deployContract);
+      await delegateTokens(
+        tokenContract.address,
+        acc1.account.address,
+        acc1.account
+      );
+      const blockNumber = await publicClient.getBlockNumber();
+      const tokenizedBallotContract = await deployBallotContract(blockNumber, tokenContract.address);
+      const aboveValue = MINT_VALUE+1n;
+      await expect(castVote(tokenizedBallotContract.address,2n,aboveValue,acc1.account)).to.rejectedWith("The amount to vote is too high");
+    });
+    
+  });
+  describe("Query Result", async () => {
+    it("is a simple vote", async () => {
+      const { tokenContract, acc1, publicClient } = await loadFixture(deployContract);
+      await delegateTokens(
+        tokenContract.address,
+        acc1.account.address,
+        acc1.account
+      );
+      const blockNumber = await publicClient.getBlockNumber();
+      const tokenizedBallotContract = await deployBallotContract(blockNumber, tokenContract.address);
+      await castVote(tokenizedBallotContract.address,2n,MINT_VALUE,acc1.account);
+      const [_name,winningProposalIndex,count] = await queryResults(tokenizedBallotContract.address);
+      expect(winningProposalIndex).to.equals(2n);
+      expect(count).to.equals(MINT_VALUE);
+    });
+    it("has several votes", async () => {
+      const { tokenContract, acc1, acc2, acc3, publicClient } = await loadFixture(deployContract);
+      await delegateTokens(
+        tokenContract.address,
+        acc1.account.address,
+        acc1.account
+      );
+      await delegateTokens(
+        tokenContract.address,
+        acc2.account.address,
+        acc2.account
+      );
+      await delegateTokens(
+        tokenContract.address,
+        acc3.account.address,
+        acc3.account
+      );
+      const blockNumber = await publicClient.getBlockNumber();
+      const tokenizedBallotContract = await deployBallotContract(blockNumber, tokenContract.address);
+
+      const valueDivided = MINT_VALUE / 2n;
+      await castVote(tokenizedBallotContract.address,2n,valueDivided,acc1.account);
+      await castVote(tokenizedBallotContract.address,1n,MINT_VALUE,acc2.account);
+      await castVote(tokenizedBallotContract.address,1n,valueDivided,acc3.account);
+      const [_name,winningProposalIndex,count] = await queryResults(tokenizedBallotContract.address);
+      expect(winningProposalIndex).to.equals(1n);
+      expect(count).to.equals(MINT_VALUE + valueDivided);
     });
     
   });

@@ -23,8 +23,6 @@ import {
     console.log(`Voting ${amount} tokens to proposal ${proposal}`);
 
     const votePower = await tokenizedBallotContract.read.getVotePower([account.address]);
-    console.log("your vote power is:", votePower);
-    if(votePower < amount) throw new Error("You don't have enough vote power to vote");
 
     const hash = await tokenizedBallotContract.write.vote([proposal,amount], { account });
     console.log("Transaction hash:", hash);
