@@ -55,7 +55,7 @@ async function deployContract() {
 }
 
 async function deployBallotContract(
-  blockNumber: number,
+  blockNumber: bigint,
   tokenContractAddress: `0x${string}`
 ): Promise<TokenizedBallot> {
   const tokenizedBallotContract = (await viem.deployContract(
