@@ -25,7 +25,7 @@ import {
     const votePower = await tokenizedBallotContract.read.getVotePower([account.address]);
     console.log("your vote power is:", votePower);
     if(votePower < amount) throw new Error("You don't have enough vote power to vote");
-    
+
     const hash = await tokenizedBallotContract.write.vote([proposal,amount], { account });
     console.log("Transaction hash:", hash);
     return hash;
@@ -74,7 +74,7 @@ import {
     stdin.addListener("data", async function (d) {
       if (d.toString().trim().toLowerCase() != "n") {
         console.log("Voting...");
-        castVote(contractAddress, BigInt(proposalIndex), BigInt(proposalAmountToVote), account);
+       await  castVote(contractAddress, BigInt(proposalIndex), BigInt(proposalAmountToVote), account);
          } else {
         console.log("Operation cancelled");
       }
