@@ -1,4 +1,4 @@
-# Week 2 - Group 6
+# Week 3 - Group 6
 
 ## Forks
 
@@ -33,9 +33,9 @@ Here are the deployed contracts:
    - https://sepolia.etherscan.io/tx/0xf7277252c5f360e2641dc689a6c16640beba265827cdf4784b3a853c234fd864
    - https://sepolia.etherscan.io/tx/0x1f64b5e0d6c23db1c8cdbc906a93f041173ef5a742d86958e00be54d0f05a808
 
--Self delegation 0xC6CbDd7D90458c5e1003DdE243bF1561efAeE516 (Nico) : https://sepolia.etherscan.io/tx/0x7383bcb076f048720cfd7e99abfe685791e91ca97a056a4bbcfba23548e65777
--Self delegation 0xC6CbDd7D90458c5e1003DdE243bF1561efAeE516 (Nico) : https://sepolia.etherscan.io/tx/0x4966553f85a156113becba879dc4e20c00dc6994f62d4df67a89cddead7eac3e
--Self delegation 0x9d1aAF184154E9d6Fc7d138Ee560134732427f7E (Robert) : https://sepolia.etherscan.io/tx/0x9c1330c783bac50095a1ebce585353901d3f079b6fcf30498f6650dbc6966fd3
+- Self delegation 0xC6CbDd7D90458c5e1003DdE243bF1561efAeE516 (Nico) : https://sepolia.etherscan.io/tx/0x7383bcb076f048720cfd7e99abfe685791e91ca97a056a4bbcfba23548e65777
+- Self delegation 0xC6CbDd7D90458c5e1003DdE243bF1561efAeE516 (Nico) : https://sepolia.etherscan.io/tx/0x4966553f85a156113becba879dc4e20c00dc6994f62d4df67a89cddead7eac3e
+- Self delegation 0x9d1aAF184154E9d6Fc7d138Ee560134732427f7E (Robert) : https://sepolia.etherscan.io/tx/0x9c1330c783bac50095a1ebce585353901d3f079b6fcf30498f6650dbc6966fd3
 
 - Minting for extra accounts that will delegate to lakunle and detergent :
    - To 0xa18d5e848Aca5A5Eaf9cD2d05bAe1D60C2f4884d (nico) : https://sepolia.etherscan.io/tx/0xa6927dc18e5c46cb23217055e78c8fd7f1271250ebeb4db25254fa6c23ff2f98
