@@ -4,7 +4,7 @@ export async function getVotePower(
   ballotContract: `0x${string}`,
   addressTo: `0x${string}`,
 ) {
-  const tokenizedBallotContract = await viem.getContractAt("TokenizedToken", ballotContract);
+  const tokenizedBallotContract = await viem.getContractAt("TokenizedBallot", ballotContract);
   const votePower = await tokenizedBallotContract.read.getVotePower([addressTo]);
   return votePower;
 }
