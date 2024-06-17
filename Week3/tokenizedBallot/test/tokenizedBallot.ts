@@ -75,7 +75,7 @@ describe("TokenizedBallot", async () => {
     it("has the provided proposals", async () => {
       const { tokenContract } = await loadFixture(deployContract);
       const tokenizedBallotContract = await deployBallotContract(
-        0,
+        0n,
         tokenContract.address
       );
       for (let index = 0; index < PROPOSALS.length; index++) {
@@ -153,5 +153,34 @@ describe("TokenizedBallot", async () => {
       expect(vote1).to.equals(two);
       expect(vote2).to.equals(0n);
     });
+  });
+  describe("GetVotePower", async () => {
+    it("votePower should be equals to the delegated tokens for blocks after delegate", async () => {
+      const { tokenContract, acc1, publicClient } = await loadFixture(deployContract);
+      await delegateTokens(
+        tokenContract.address,
+        acc1.account.address,
+        acc1.account
+      );
+      const blockNumber = await publicClient.getBlockNumber();
+      const tokenizedBallotContract = await deployBallotContract(blockNumber, tokenContract.address);
+      const vote = await tokenizedBallotContract.read.getVotePower([acc1.account.address]);
+      expect(vote).to.equals(MINT_VALUE);
+    });
+    it("votePower should be equals to the delegated tokens for another delegate", async () => {
+      const { tokenContract, acc1, acc2, publicClient } = await loadFixture(deployContract);
+      await delegateTokens(
+        tokenContract.address,
+        acc2.account.address,
+        acc1.account
+      );
+      const blockNumber = await publicClient.getBlockNumber();
+      const tokenizedBallotContract = await deployBallotContract(blockNumber, tokenContract.address);
+      const vote1 = await tokenizedBallotContract.read.getVotePower([acc1.account.address]);
+      const vote2 = await tokenizedBallotContract.read.getVotePower([acc2.account.address]);
+      expect(vote1).to.equals(0n);
+      expect(vote2).to.equals(MINT_VALUE);
+    });
+    
   });
 });
