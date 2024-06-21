@@ -10,8 +10,8 @@ import useFetchHTTP from "~~/hooks/custom/useFetchHTTP";
 const Home: NextPage = () => {
   const { address: connectedAddress } = useAccount();
 
-  const {data: valueFromBackend, error} = useFetchHTTP("http://localhost:3001/test");
-
+  const {data: valueFromBackend, error} = useFetchHTTP(`${process.env.NEXT_PUBLIC_BACKEND_URL}/test`);
+  
   return (
     <>
       <div className="flex items-center flex-col flex-grow pt-10">
