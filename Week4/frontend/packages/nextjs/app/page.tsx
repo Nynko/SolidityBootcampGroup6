@@ -20,6 +20,7 @@ const Home: NextPage = () => {
             <span className="block text-2xl mb-2">Hello Group6 to</span>
             <span className="block text-4xl font-bold">Scaffold-ETH 2</span>
             <span className="block text-2xl mb-2">test: {error != null ? error : valueFromBackend}</span>
+            <span className="block text-1xl mb-1">{"This was a call to the backend ; )"}</span>
           </h1>
           <div className="flex justify-center items-center space-x-2 flex-col sm:flex-row">
             <p className="my-2 font-medium">Connected Address:</p>
