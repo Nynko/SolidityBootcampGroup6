@@ -6,16 +6,11 @@ function isValidChainKey(key: string): key is ChainKeys {
     return key in chains;
 }
 
-export function getChainFromEnv(): ChainKeys{
+export function getChainFromEnv(): chains.Chain {
 const envChain : string | undefined = process.env.NEXT_PUBLIC_CHAIN_ENV;
 if(envChain && isValidChainKey(envChain)){
-    return  envChain;
+    return chains[envChain];
 } else {  
-    return "sepolia";
+    return chains.sepolia;
 }
 }
-
-
-
-
-
