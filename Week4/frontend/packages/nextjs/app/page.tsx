@@ -11,6 +11,8 @@ const Home: NextPage = () => {
   const { address: connectedAddress } = useAccount();
 
   const {data: valueFromBackend, error} = useFetchHTTP(`${process.env.NEXT_PUBLIC_BACKEND_URL}/test`);
+  console.log(error);
+  
   
   return (
     <>
@@ -19,7 +21,7 @@ const Home: NextPage = () => {
           <h1 className="text-center">
             <span className="block text-2xl mb-2">Hello Group6 to</span>
             <span className="block text-4xl font-bold">Scaffold-ETH 2</span>
-            <span className="block text-2xl mb-2">test: {error ? `error: ${error.message}` : valueFromBackend}</span>
+            <span className="block text-2xl mb-2">test: {error != null ? error : valueFromBackend}</span>
           </h1>
           <div className="flex justify-center items-center space-x-2 flex-col sm:flex-row">
             <p className="my-2 font-medium">Connected Address:</p>
