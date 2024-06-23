@@ -14,4 +14,11 @@ export class AppController {
   async test() {
     return {result: await this.appService.test()};
   }
+
+  @Get('recent-votes')
+  async recentVotes() {
+    return {result: await this.appService.getRecentVotes()};
+  }
+
+
 }
