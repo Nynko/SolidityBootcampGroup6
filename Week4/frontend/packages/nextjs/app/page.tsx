@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import ApiCall from "./ApiCall";
 import type { NextPage } from "next";
 import { useAccount } from "wagmi";
 import { BugAntIcon, MagnifyingGlassIcon } from "@heroicons/react/24/outline";
@@ -11,8 +12,8 @@ import { TokenizedBallot } from "~~/components/TokenizedBallot";
 const Home: NextPage = () => {
   const { address: connectedAddress } = useAccount();
 
-  const {data: valueFromBackend, error} = useFetchHTTP(`${process.env.NEXT_PUBLIC_BACKEND_URL}/test`);  
-  
+  const { data: valueFromBackend, error } = useFetchHTTP(`${process.env.NEXT_PUBLIC_BACKEND_URL}/test`);
+
   return (
     <>
       <div className="flex items-center flex-col flex-grow pt-10">
@@ -27,7 +28,8 @@ const Home: NextPage = () => {
             <p className="my-2 font-medium">Connected Address:</p>
             <Address address={connectedAddress} />
           </div>
-          <TokenizedBallot/>
+          <ApiCall />
+          <TokenizedBallot />
         </div>
 
         <div className="flex-grow bg-base-300 w-full mt-16 px-8 py-12">
