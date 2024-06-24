@@ -91,7 +91,7 @@ function TokenAddressFromApi() {
   const [isLoading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch("http://localhost:3001/contract-address")
+    fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/contract-address`)
       .then(res => res.json())
       .then(data => {
         setData(data);
@@ -115,7 +115,7 @@ function TokenFromApi() {
   const [hash, setHash] = useState("");
 
   async function handleMintTokens() {
-    const mintToken = await mintTokens("http://localhost:3001/mint-tokens", {
+    const mintToken = await mintTokens(`${process.env.NEXT_PUBLIC_BACKEND_URL}/mint-tokens`, {
       address: addressIput,
       amount: amount,
     });
@@ -160,7 +160,7 @@ function GetTokenBalance() {
   const { address } = useAccount();
 
   useEffect(() => {
-    fetch(`http://localhost:3001/token-balance/${address}`)
+    fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/token-balance/${address}`)
       .then(res => res.json())
       .then(data => {
         setData(data);
