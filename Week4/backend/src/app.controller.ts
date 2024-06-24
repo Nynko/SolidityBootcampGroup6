@@ -42,4 +42,11 @@ export class AppController {
       result: await this.appService.mintTokens(body.address, body.amount),
     };
   }
+
+  @Get('recent-votes')
+  async recentVotes() {
+    return {result: await this.appService.getRecentVotes()};
+  }
+
+
 }
