@@ -27,7 +27,7 @@ export function Delegate() {
                     functionName: 'delegate',
                     args:  [address as `0x${string}`],
                 }).catch((e: Error) => { throw e })
-                setResult(`tx hash: ${tx}`)
+                setResult(`${tx}`)
             } catch (error) {
                 setResult(error.message)
             }
@@ -35,7 +35,7 @@ export function Delegate() {
     }
 
     return (
-        <div className="card w-full bg-primary text-primary-content mt-4">
+        <div className="card w-full bg-primary text-primary-content mt-4 p-4 ">
             <div className="card-body">
                 <>
                 <h2 className="card-title">Delegate - {tokenAddress ?? CONST_SEPOLIA_TOKEN_ADDRESS}</h2>
@@ -45,56 +45,27 @@ export function Delegate() {
                     <input
                         type="text"
                         placeholder="Contract Address"
-                        className="input input-bordered w-full max-w-xs"
+                        className="input input-bordered w-full  "
                         value={tokenAddress ?? CONST_SEPOLIA_TOKEN_ADDRESS}
                         onChange={e => setTokenAdress(e.target.value)}
-                        onSubmit={  handleDelegate}
-                    />
+                     />
                 </> 
-                {/* {!result ? (
-                    <>
-                        <label className="label">
-                            <span className="label-text">Enter the amount to vote for:</span>
-                        </label>
-                        <input
-                            type="number"
-                            placeholder="Enter the amount to vote"
-                            className="input input-bordered w-full max-w-xs"
-                            value={amount}
-                            onChange={e => setAmount(e.target.value)}
-                        />
-                        <label className="label">
-                            <span className="label-text">Click on the proposal:</span>
-                        </label>
-                        {(
-                            <ul>
-                                {proposals.map((proposal, index) => (
-                                    <li key={index} onClick={() => handleProposalClick(index)}>
-                                        {proposal}
-                                        {indexProposal === index && "-- Selected!"}
-                                    </li>
-                                ))}
-                            </ul>
-                        )}
-                    </>) : (
-                    <>
-                        <label className="label">
-                            <span className="label-text">{result}</span>
-                        </label>
-                    </>
-                )
-                } */}
-            </div>
-            { <button
-                className="btn btn-active btn-neutral"
+               
+                 {
+                  <button
+                className="btn btn-active btn-neutral w-[50%]"
                 // disabled={!!result}
                 onClick={handleDelegate}
             >
                 Delegate My Tokens!
-            </button>}
-            {result &&    <label className="label">
-                            <span className="label-text">{result}</span>
+            </button>
+            }
+            {result &&    <label className="label flex flex-col">
+                   <span className="label-text">Transaction Hash: {result} </span>    
+                            <a target="_blank" href={"https://sepolia.etherscan.io/tx/" + result} className="label-text hover:scale-125 bg-slate-500 rounded-3xl p-2"> Check it on explorer!  </a>
                         </label>}
+            </div>
+           
         </div>
     );
 }
