@@ -33,7 +33,7 @@ async function main() {
     throw new Error("Invalid contract address");
 
   const targetBlockNumber = BigInt(parameters[1]);
-
+  
   const publicClient = createPublicClient({
     chain: sepolia,
     transport: http(`${providerApiWithKey}`),

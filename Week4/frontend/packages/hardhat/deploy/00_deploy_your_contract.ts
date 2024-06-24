@@ -1,6 +1,7 @@
 import { HardhatRuntimeEnvironment } from "hardhat/types";
 import { DeployFunction } from "hardhat-deploy/types";
 import { Contract } from "ethers";
+import { toHex } from "hardhat/viem";
 
 /**
  * Deploys a contract named "YourContract" using the deployer account and
@@ -22,7 +23,7 @@ const deployYourContract: DeployFunction = async function (hre: HardhatRuntimeEn
   const { deployer } = await hre.getNamedAccounts();
   const { deploy } = hre.deployments;
 
-  await deploy("YourContract", {
+  const tokenContract = await deploy("MyToken", {
     from: deployer,
     // Contract constructor arguments
     args: [deployer],
@@ -31,9 +32,27 @@ const deployYourContract: DeployFunction = async function (hre: HardhatRuntimeEn
     // automatically mining the contract deployment transaction. There is no effect on live networks.
     autoMine: true,
   });
+  const proposals = ["Chocolate Mint", "Matheus", "Encode Club Sandwich"];
+
+
+   /// TODO : LEARN HOW TO DEPLOY USING HARDHAT
+   
+  const ballotContract = await deploy("TokenizedBallot", {
+    from: deployer,
+    // Contract constructor arguments
+    args: [proposals.map(prop => toHex(prop, { size: 32 })), contractAddress, targetBlockNumber],
+    log: true,
+    // autoMine: can be passed to the deploy function to make the deployment process faster on local networks by
+    // automatically mining the contract deployment transaction. There is no effect on live networks.
+    autoMine: true,
+  });
+  console.log("🚀 TokenizedBallot deployed to:", tokenContract.address);
+
+  const yourContractToken = await hre.ethers.getContract<Contract>("MyToken", deployer);
+  console.log("👋 Initial greeting:", await yourContractToken.greeting());
 
   // Get the deployed contract to interact with it after deploying.
-  const yourContract = await hre.ethers.getContract<Contract>("YourContract", deployer);
+  const yourContract = await hre.ethers.getContract<Contract>("TokenizedBallot", deployer);
   console.log("👋 Initial greeting:", await yourContract.greeting());
 };
 
