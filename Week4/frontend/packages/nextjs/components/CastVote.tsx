@@ -3,12 +3,13 @@
 import { hexToBigInt, parseEther, toHex, hexToString } from "viem";
 import {   usePublicClient, useWriteContract } from "wagmi";
 import { abi } from "../abi/TokenizedBallot.json"
+import { CONST_SEPOLIA_BALLOT_ADDRESS } from "~~/utils/getChain";
 
 
 
 export function CastVote() {
     const [proposals, setProposals] = useState<string[]>([])
-    const [address, setAdress] = useState("")
+    const [address, setAdress] = useState(CONST_SEPOLIA_BALLOT_ADDRESS as `0x${string}`)
     const [amount, setAmount] = useState("");
     const [indexProposal, setIndexProposal] = useState<number | null>(null);
     const { writeContractAsync } = useWriteContract();
@@ -46,8 +47,9 @@ export function CastVote() {
     };
 
     const handleCastVote = async () => {
-        if (indexProposal && amount) {
+         if (indexProposal != null  && amount) {
             try {
+                console.log('Casting vote for proposal:', indexProposal, amount);   
                 const tx = await writeContractAsync({
                     abi,
                     address: address,
@@ -58,14 +60,16 @@ export function CastVote() {
                     ],
                 }).catch((e: Error) => { throw e })
                 setResult(`tx hash: ${tx}`)
+                console.log(`tx hash: ${tx}`)   
             } catch (error) {
+                console.log("ERROR occured : " , error.message)
                 setResult(error.message)
             }
         }
     }
 
     return (
-        <div className="card w-96 bg-primary text-primary-content mt-4">
+        <div className="card w-full  bg-primary text-primary-content mt-4 p-4 ">
             <div className="card-body">
                 <h2 className="card-title">Cast a vote</h2>
                 {proposals && (<>
@@ -75,11 +79,17 @@ export function CastVote() {
                     <input
                         type="text"
                         placeholder="Contract Address"
-                        className="input input-bordered w-full max-w-xs"
+                        className="input input-bordered w-full "
                         value={address}
                         onChange={e => setAdress(e.target.value)}
-                        onKeyUp={(e) => { if (e.key == "Enter") { handleGetProposals() } }}
-                    />
+                     />
+                    <button
+                        className="btn w-[40%] items-center justify-center btn-active btn-neutral"
+                        onClick={handleGetProposals}
+                    >   
+                        Get Proposals
+                    </button>
+                    
                 </>)}
                 {!result ? (
                     <>
@@ -97,9 +107,9 @@ export function CastVote() {
                             <span className="label-text">Click on the proposal:</span>
                         </label>
                         {(
-                            <ul>
+                            <ul className="bg-secondary rounded-2xl p-8  ">
                                 {proposals.map((proposal, index) => (
-                                    <li key={index} onClick={() => handleProposalClick(index)}>
+                                    <li className="bg-primary rounded-3xl p-2 my-2 text-center" key={index} onClick={() => handleProposalClick(index)}>
                                         {proposal}
                                         {indexProposal === index && "-- Selected!"}
                                     </li>
