@@ -76,7 +76,7 @@ export function CastVote() {
                         className="input input-bordered w-full max-w-xs"
                         value={address}
                         onChange={e => setAdress(e.target.value)}
-                        onSubmit={handleGetProposals}
+                        onKeyUp={(e) => { if (e.key == "Enter") { handleGetProposals() } }}
                     />
                 </>)}
                 {!result ? (
