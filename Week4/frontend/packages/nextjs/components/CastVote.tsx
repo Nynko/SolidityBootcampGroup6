@@ -1,8 +1,10 @@
-import { throws } from "assert";
-import { useEffect, useState } from "react";
+/* eslint-disable prettier/prettier */
+ import {   useState } from "react";
 import { hexToBigInt, parseEther, toHex, hexToString } from "viem";
-import { useAccount, usePublicClient, useWriteContract } from "wagmi";
+import {   usePublicClient, useWriteContract } from "wagmi";
 import { abi } from "../abi/TokenizedBallot.json"
+
+
 
 export function CastVote() {
     const [proposals, setProposals] = useState<string[]>([])
