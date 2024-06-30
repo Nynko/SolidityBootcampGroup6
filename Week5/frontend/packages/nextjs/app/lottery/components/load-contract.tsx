@@ -54,7 +54,7 @@ export function LoadContractAddress({ address, setAddress, setTokenAddress }: { 
                         <button
                             className="btn w-[40%] items-center justify-center btn-active btn-neutral"
                             onClick={() => checkSetAddress(localAddress)}>
-                            Load the contrat
+                            Load the contract
                         </button>
                         {error && <p className="text-color red">{error}</p>}
 

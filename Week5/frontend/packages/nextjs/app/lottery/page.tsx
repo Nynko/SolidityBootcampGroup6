@@ -6,6 +6,8 @@ import { BuyTokens } from "./components/buy-tokens";
 import { useState } from "react";
 import { DelegateAllowance } from "./components/delegate-allowance";
 import { RedeemTokens } from "./components/redeem-tokens";
+import {ViewPrizePool} from "./components/view-prizepool";
+import {WithdrawFromPrizepool} from "./components/withdraw-from-prizepool";
 const Lottery: NextPage = () => {
     const [address, setAdress] = useState("");
     const [tokenAddress, setTokenAddress] = useState<string | null>(null);
@@ -31,6 +33,8 @@ const Lottery: NextPage = () => {
                         <BuyTokens address={address} blockExplorer={blockExplorer} />
                         <DelegateAllowance address={address} tokenAddress={tokenAddress} blockExplorer={blockExplorer} />
                         <RedeemTokens address={address} blockExplorer={blockExplorer} />
+                        <ViewPrizePool address={address} />
+                        <WithdrawFromPrizepool address={address} blockExplorer={blockExplorer} />
                     </>)}
                 </div>
             </div>
