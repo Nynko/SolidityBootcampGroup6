@@ -8,7 +8,7 @@ import { Address } from "~~/components/scaffold-eth";
 
 const Home: NextPage = () => {
   const { address: connectedAddress } = useAccount();
-  const debugMode = process.env.NEXT_PUBLIC_DEBUG;
+  const debugMode = process.env.NEXT_PUBLIC_CHAIN_ENV == "hardhat";
   return (
     <>
       <div className="flex items-center flex-col flex-grow pt-10">

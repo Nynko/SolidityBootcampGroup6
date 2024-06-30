@@ -9,7 +9,7 @@ import { RedeemTokens } from "./components/redeem-tokens";
 
 const Lottery: NextPage = () => {
     const [address, setAdress] = useState("");
-    const debugMode = process.env.NEXT_PUBLIC_DEBUG;
+    const debugMode = process.env.NEXT_PUBLIC_CHAIN_ENV == "hardhat"
     let blockExplorer;
     if (debugMode) blockExplorer = "http://localhost:3000/blockexplorer/transaction/"
     else blockExplorer = "https://sepolia.etherscan.io/tx/"

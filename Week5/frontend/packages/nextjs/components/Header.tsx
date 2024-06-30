@@ -14,7 +14,7 @@ type HeaderMenuLink = {
   icon?: React.ReactNode;
 };
 
-const debugMode = process.env.NEXT_PUBLIC_DEBUG;
+const debugMode = process.env.NEXT_PUBLIC_CHAIN_ENV == "hardhat"
 
 const baseMenuLinks: HeaderMenuLink[] = [
   {

@@ -22,7 +22,7 @@ export function RedeemTokens({ address, blockExplorer }: { address: string, bloc
                     functionName: 'returnTokens',
                     args: [parseEther(amount)],
                 }).catch((e: Error) => { throw e })
-                setResult(`tx hash: ${tx}`)
+                setResult(tx)
                 console.log(`tx hash: ${tx}`)
             } catch (error) {
                 if (error instanceof Error) {
