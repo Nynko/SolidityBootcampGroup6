@@ -5,6 +5,7 @@ import type { NextPage } from "next";
 import { useAccount } from "wagmi";
 import { BugAntIcon, CurrencyDollarIcon, MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 import { Address } from "~~/components/scaffold-eth";
+// import { LotteryState } from "./lottery/components/test";
 
 const Home: NextPage = () => {
   const { address: connectedAddress } = useAccount();
@@ -28,6 +29,11 @@ const Home: NextPage = () => {
             </code>
             {" "} in your .env
           </p>)}
+          {/* <br />
+          <h2 className="text-center">
+            <span className="block text-2xl font-bold">Lottery State</span>
+            <LotteryState />
+          </h2> */}
         </div>
 
         <div className="flex-grow bg-base-300 w-full mt-16 px-8 py-12">
