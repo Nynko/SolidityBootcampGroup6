@@ -24,7 +24,7 @@ const Home: NextPage = () => {
           {!debugMode && (<p className="text-center text-lg">
             To activate debug mode add {" "}
             <code className="italic bg-base-300 text-base font-bold max-w-full break-words break-all inline-block">
-              NEXT_PUBLIC_DEBUG="true" {" "}
+              NEXT_PUBLIC_CHAIN_ENV="hardhat" {" "}
             </code>
             {" "} in your .env
           </p>)}
