@@ -1,6 +1,7 @@
 import { viem } from "hardhat";
 import { parseEther, formatEther, Address } from "viem";
 import * as readline from "readline";
+import { getAccounts, getClient, initContracts } from "../utils/hardhat_utils";
 
 const MAXUINT256 =
   115792089237316195423570985008687907853269984665640564039457584007913129639935n;
@@ -13,7 +14,8 @@ const BET_FEE = "0.2";
 const TOKEN_RATIO = 1n;
 
 async function main() {
-  await initContracts();
+  ({ contractAddress, tokenAddress } = await initContracts(TOKEN_RATIO, parseEther(BET_PRICE),
+    parseEther(BET_FEE)));
   const rl = readline.createInterface({
     input: process.stdin,
     output: process.stdout,
@@ -21,25 +23,6 @@ async function main() {
   mainMenu(rl);
 }
 
-async function getAccounts() {
-  return await viem.getWalletClients();
-}
-
-async function getClient() {
-  return await viem.getPublicClient();
-}
-
-async function initContracts() {
-  const contract = await viem.deployContract("Lottery", [
-    "LotteryToken",
-    "LT0",
-    TOKEN_RATIO,
-    parseEther(BET_PRICE),
-    parseEther(BET_FEE),
-  ]);
-  contractAddress = contract.address;
-  tokenAddress = await contract.read.paymentToken();
-}
 
 async function mainMenu(rl: readline.Interface) {
   menuOptions(rl);

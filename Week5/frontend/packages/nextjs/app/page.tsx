@@ -3,12 +3,12 @@
 import Link from "next/link";
 import type { NextPage } from "next";
 import { useAccount } from "wagmi";
-import { BugAntIcon, MagnifyingGlassIcon } from "@heroicons/react/24/outline";
+import { BugAntIcon, CurrencyDollarIcon, MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 import { Address } from "~~/components/scaffold-eth";
 
 const Home: NextPage = () => {
   const { address: connectedAddress } = useAccount();
-
+  const debugMode = process.env.NEXT_PUBLIC_CHAIN_ENV == "hardhat";
   return (
     <>
       <div className="flex items-center flex-col flex-grow pt-10">
@@ -21,27 +21,18 @@ const Home: NextPage = () => {
             <p className="my-2 font-medium">Connected Address:</p>
             <Address address={connectedAddress} />
           </div>
-          <p className="text-center text-lg">
-            Get started by editing{" "}
+          {!debugMode && (<p className="text-center text-lg">
+            To activate debug mode add {" "}
             <code className="italic bg-base-300 text-base font-bold max-w-full break-words break-all inline-block">
-              packages/nextjs/app/page.tsx
+              NEXT_PUBLIC_CHAIN_ENV="hardhat" {" "}
             </code>
-          </p>
-          <p className="text-center text-lg">
-            Edit your smart contract{" "}
-            <code className="italic bg-base-300 text-base font-bold max-w-full break-words break-all inline-block">
-              YourContract.sol
-            </code>{" "}
-            in{" "}
-            <code className="italic bg-base-300 text-base font-bold max-w-full break-words break-all inline-block">
-              packages/hardhat/contracts
-            </code>
-          </p>
+            {" "} in your .env
+          </p>)}
         </div>
 
         <div className="flex-grow bg-base-300 w-full mt-16 px-8 py-12">
           <div className="flex justify-center items-center gap-12 flex-col sm:flex-row">
-            <div className="flex flex-col bg-base-100 px-10 py-10 text-center items-center max-w-xs rounded-3xl">
+            {debugMode && (<div className="flex flex-col bg-base-100 px-10 py-10 text-center items-center max-w-xs rounded-3xl">
               <BugAntIcon className="h-8 w-8 fill-secondary" />
               <p>
                 Tinker with your smart contract using the{" "}
@@ -50,7 +41,7 @@ const Home: NextPage = () => {
                 </Link>{" "}
                 tab.
               </p>
-            </div>
+            </div>)}
             <div className="flex flex-col bg-base-100 px-10 py-10 text-center items-center max-w-xs rounded-3xl">
               <MagnifyingGlassIcon className="h-8 w-8 fill-secondary" />
               <p>
@@ -59,6 +50,15 @@ const Home: NextPage = () => {
                   Block Explorer
                 </Link>{" "}
                 tab.
+              </p>
+            </div>
+            <div className="flex flex-col bg-base-100 px-10 py-10 text-center items-center max-w-xs rounded-3xl">
+              <CurrencyDollarIcon className="h-8 w-8 fill-secondary" />
+              <p>
+                <Link href="/lottery" passHref className="link">
+                  Play Lottery {" "}
+                </Link>{" "}
+                with our deployed smart contract{" "}
               </p>
             </div>
           </div>
