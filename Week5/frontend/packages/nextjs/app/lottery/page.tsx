@@ -6,7 +6,7 @@ import { BuyTokens } from "./components/buy-tokens";
 import { useState } from "react";
 import { DelegateAllowance } from "./components/delegate-allowance";
 import { RedeemTokens } from "./components/redeem-tokens";
-import { LotteryState } from "./components/LotteryState";
+import { LotteryState } from "./components/lottery-state";
 import { ViewPrizePool } from "./components/view-prizepool";
 import { WithdrawFromPrizepool } from "./components/withdraw-from-prizepool";
 import { Bet } from "./components/bets";
