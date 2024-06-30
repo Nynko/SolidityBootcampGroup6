@@ -4,7 +4,7 @@ import { abi } from "../../../abi/Lottery.json";
 import { hexToBigInt, hexToString, parseEther, toHex } from "viem";
 import { usePublicClient, useWriteContract } from "wagmi";
 
-export function WithdrawFromPrizepool({ address, blockExplorer }: { address: string; blockExplorer: string }) {
+export function WithdrawFromPrizepool({ address, blockExplorer, reRenderLotteryState }: { address: string; blockExplorer: string, reRenderLotteryState: () => void }) {
   const [amount, setAmount] = useState("");
   const { writeContractAsync } = useWriteContract();
   const [result, setResult] = useState<string | null>(null);
@@ -23,6 +23,7 @@ export function WithdrawFromPrizepool({ address, blockExplorer }: { address: str
           throw e;
         });
         setResult(tx);
+        reRenderLotteryState();
         console.log(`tx hash: ${tx}`);
       } catch (error) {
         if (error instanceof Error) {

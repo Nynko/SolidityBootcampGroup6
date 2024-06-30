@@ -4,7 +4,7 @@ import { abi as lotteryAbi } from "../../../abi/Lottery.json";
 import { formatEther, hexToBigInt, hexToString, parseEther, toHex } from "viem";
 import { usePublicClient, useWriteContract } from "wagmi";
 
-export function ViewPrizePool({ address }: { address: string }) {
+export function ViewPrizePool({ address, reRenderLotteryState }: { address: string, reRenderLotteryState: () => void }) {
   const [prizePool, setPrizePool] = useState<bigint | null>(null);
   const [error, setError] = useState<String | null>(null);
   const client = usePublicClient();
@@ -24,6 +24,7 @@ export function ViewPrizePool({ address }: { address: string }) {
       }) as bigint;
 
     setPrizePool(prizePool);
+    reRenderLotteryState();
     console.log(prizePool);
   };
 

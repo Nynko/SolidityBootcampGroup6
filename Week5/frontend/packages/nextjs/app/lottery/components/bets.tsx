@@ -6,7 +6,7 @@ import { abi } from "../../../abi/Lottery.json"
 
 
 
-export function Bet({ address, blockExplorer }: { address: string, blockExplorer: string }) {
+export function Bet({ address, blockExplorer, reRenderLotteryState }: { address: string, blockExplorer: string, reRenderLotteryState: () => void }) {
     const [amount, setAmount] = useState("");
     const { writeContractAsync } = useWriteContract();
     const [result, setResult] = useState<string | null>(null)
@@ -22,6 +22,7 @@ export function Bet({ address, blockExplorer }: { address: string, blockExplorer
                 }).catch((e: Error) => setError(e.message))
                 if (tx) {
                     setResult(tx)
+                    reRenderLotteryState();
                 }
                 console.log(`tx hash: ${tx}`)
             } else {
@@ -34,6 +35,7 @@ export function Bet({ address, blockExplorer }: { address: string, blockExplorer
                 }).catch((e: Error) => setError(e.message))
                 if (tx) {
                     setResult(tx)
+                    reRenderLotteryState();
                 }
                 console.log(`tx hash: ${tx}`)
             }
