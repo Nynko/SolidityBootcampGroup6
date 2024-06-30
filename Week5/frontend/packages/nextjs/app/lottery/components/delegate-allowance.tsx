@@ -2,8 +2,8 @@
 import { useEffect, useState } from "react";
 import { hexToBigInt, parseEther, toHex, hexToString } from "viem";
 import { usePublicClient, useWriteContract } from "wagmi";
-import { abi as tokenAbi } from "../../../../../../lottery-contract/artifacts/contracts/LotteryToken.sol/LotteryToken.json"
-import { abi as lotteryAbi } from "../../../../../../lottery-contract/artifacts/contracts/Lottery.sol/Lottery.json"
+import { abi as tokenAbi } from "../../../abi/LotteryToken.json"
+import { abi as lotteryAbi } from "../../../abi/Lottery.json"
 
 const MAXUINT256 =
     115792089237316195423570985008687907853269984665640564039457584007913129639935n;

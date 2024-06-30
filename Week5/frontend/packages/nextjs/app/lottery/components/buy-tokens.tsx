@@ -2,7 +2,7 @@
 import { useState } from "react";
 import { hexToBigInt, parseEther, toHex, hexToString } from "viem";
 import { usePublicClient, useWriteContract } from "wagmi";
-import { abi } from "../../../../../../lottery-contract/artifacts/contracts/Lottery.sol/Lottery.json"
+import { abi } from "../../../abi/Lottery.json"
 
 
 

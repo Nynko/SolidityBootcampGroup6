@@ -1,7 +1,7 @@
 /* eslint-disable prettier/prettier */
 import { Dispatch, SetStateAction, useState } from "react";
 import { usePublicClient } from "wagmi";
-import { abi as lotteryAbi } from "../../../../../../lottery-contract/artifacts/contracts/Lottery.sol/Lottery.json"
+import { abi as lotteryAbi } from "../../../abi/Lottery.json"
 
 
 export function LoadContractAddress({ address, setAddress, setTokenAddress }: { address: string, setAddress: Dispatch<SetStateAction<string>>, setTokenAddress: Dispatch<SetStateAction<string | null>> }) {
