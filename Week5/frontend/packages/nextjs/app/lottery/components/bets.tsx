@@ -67,8 +67,16 @@ export function Bet({ address, blockExplorer }: { address: string, blockExplorer
             </button>}
             {result && <label className="label flex flex-col">
                 <span className="label-text">Transaction Hash: {result} </span>
-                <a target="_blank" href={blockExplorer + result} className="label-text hover:scale-125 bg-slate-500 rounded-3xl p-2"> Check it on explorer!  </a>
-            </label>}
+                <div className="flex">
+                    <a target="_blank" href={blockExplorer + result} className="label-text hover:scale-125 bg-slate-500 rounded-3xl p-2"> Check it on explorer!  </a>
+                    <button
+                        className="btn btn-active btn-neutral"
+                        disabled={false}
+                        onClick={() => setResult(null)}
+                    >Bet again</button>
+                </div>
+            </label>
+            }
         </div>
     );
 }
