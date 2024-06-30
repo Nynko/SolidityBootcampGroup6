@@ -1,20 +1,18 @@
 /* eslint-disable prettier/prettier */
-import { Dispatch, SetStateAction, useState } from "react";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { usePublicClient } from "wagmi";
 import { abi as lotteryAbi } from "../../../abi/Lottery.json"
+import { useDeployedContractInfo } from "~~/hooks/scaffold-eth";
 
 
 export function LoadContractAddress({ address, setAddress, setTokenAddress }: { address: string, setAddress: Dispatch<SetStateAction<string>>, setTokenAddress: Dispatch<SetStateAction<string | null>> }) {
     const [error, setError] = useState<string | null>(null)
     const [localAddress, setLocalAddress] = useState<string>("")
     const client = usePublicClient();
+    const { data: deployedContractData, isLoading: deployedContractLoading } = useDeployedContractInfo("Lottery");
 
-    const checkSetAddress = (address: string) => {
-        if (!/^0x[a-fA-F0-9]{40}$/.test(address)) {
-            setError("Invalid contract address");
-        }
-        else {
-            setAddress(address);
+    useEffect(() => {
+        if (address) {
             client?.readContract({
                 abi: lotteryAbi,
                 address: address,
@@ -23,6 +21,19 @@ export function LoadContractAddress({ address, setAddress, setTokenAddress }: { 
                 console.log("ERROR occured : ", e.message)
                 throw e;
             })
+        }
+    }, [address])
+
+    if (!deployedContractLoading && deployedContractData) {
+        setAddress(deployedContractData.address)
+    }
+
+    const checkSetAddress = (address: string) => {
+        if (!/^0x[a-fA-F0-9]{40}$/.test(address)) {
+            setError("Invalid contract address");
+        }
+        else {
+            setAddress(address);
         }
 
     }
