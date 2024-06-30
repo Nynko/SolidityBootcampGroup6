@@ -4,13 +4,14 @@ import { abi as lotteryAbi } from "../../../abi/Lottery.json";
 import { formatEther, hexToBigInt, hexToString, parseEther, toHex } from "viem";
 import { usePublicClient, useWriteContract } from "wagmi";
 
-export function ViewPrizePool({ address }: { address: string }) {
-  const [prizePool, setPrizePool] = useState<string | null>(null);
+export function ViewPrizePool({ address, reRenderLotteryState }: { address: string, reRenderLotteryState: () => void }) {
+  const [prizePool, setPrizePool] = useState<bigint | null>(null);
+  const [error, setError] = useState<String | null>(null);
   const client = usePublicClient();
 
   const handlePrizepool = async () => {
     console.log(`View total prize pool`);
-    const tx = await client
+    const prizePool = await client
       ?.readContract({
         abi: lotteryAbi,
         address: address,
@@ -19,12 +20,20 @@ export function ViewPrizePool({ address }: { address: string }) {
       })
       .catch((e: Error) => {
         console.log("ERROR occured : ", e.message);
-        setPrizePool(e.message);
-      });
+        setError(e.message);
+      }) as bigint;
 
-    setPrizePool(`${tx}`);
-    console.log(tx);
+    setPrizePool(prizePool);
+    setError(null)
+    reRenderLotteryState();
+    console.log(prizePool);
   };
+
+  let parsedPrizePool;
+  if (prizePool) {
+    parsedPrizePool = formatEther(prizePool)
+  }
+
 
   return (
     <div className="card w-full  bg-primary text-primary-content mt-4 p-4 ">
@@ -36,11 +45,18 @@ export function ViewPrizePool({ address }: { address: string }) {
           Get prize pool
         </button>
       )}
-      {prizePool && (
+      {parsedPrizePool && (
         <label className="label flex flex-col">
-          <span className="label-text">Total Prize pool: {prizePool} Tokens</span>
+          <span className="label-text">Total Prize pool: {parsedPrizePool} Tokens</span>
         </label>
       )}
+      {
+        error && (
+          <label className="label flex flex-col">
+            <span className="label-text">Error: {error}</span>
+          </label>
+        )
+      }
     </div>
   );
 }

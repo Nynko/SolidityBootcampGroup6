@@ -4,10 +4,11 @@ import { abi } from "../../../abi/Lottery.json";
 import { hexToBigInt, hexToString, parseEther, toHex } from "viem";
 import { usePublicClient, useWriteContract } from "wagmi";
 
-export function WithdrawFromPrizepool({ address, blockExplorer }: { address: string; blockExplorer: string }) {
+export function WithdrawFromPrizepool({ address, blockExplorer, reRenderLotteryState }: { address: string; blockExplorer: string, reRenderLotteryState: () => void }) {
   const [amount, setAmount] = useState("");
   const { writeContractAsync } = useWriteContract();
   const [result, setResult] = useState<string | null>(null);
+  const [error, setError] = useState<String | null>(null);
 
   const handleWithdrawFromPrizePool = async () => {
     if (address && amount) {
@@ -22,11 +23,13 @@ export function WithdrawFromPrizepool({ address, blockExplorer }: { address: str
           throw e;
         });
         setResult(tx);
+        setError(null)
+        reRenderLotteryState();
         console.log(`tx hash: ${tx}`);
       } catch (error) {
         if (error instanceof Error) {
           console.log("ERROR occured : ", error.message);
-          setResult(error.message);
+          setError(error.message);
         }
       }
     }
@@ -49,6 +52,9 @@ export function WithdrawFromPrizepool({ address, blockExplorer }: { address: str
           />
         </>
       </div>
+      {error && (<>
+        <span className="label-text">Error: {error} </span>
+      </>)}
       {!result && (
         <button className="btn btn-active btn-neutral" disabled={false} onClick={handleWithdrawFromPrizePool}>
           Return Tokens !
@@ -56,25 +62,9 @@ export function WithdrawFromPrizepool({ address, blockExplorer }: { address: str
       )}
       {result && (
         <label className="label flex flex-col">
-          <p>
-            Withdrawal transaction:{" "}
-            <span>
-              {" "}
-              <a
-                className="btn btn-active btn-neutral"
-                target="_blank"
-                href={`https://sepolia.etherscan.io/tx/${result}`}
-              ></a>
-            </span>
-          </p>
-          <a
-            target="_blank"
-            href={blockExplorer + result}
-            className="label-text hover:scale-125 bg-slate-500 rounded-3xl p-2"
-          >
-            {" "}
-            Check it on explorer!{" "}
-          </a>
+          <span className="label-text">Transaction Hash: {result} </span>
+          <a target="_blank" href={blockExplorer + result} className="label-text hover:scale-125 bg-slate-500 rounded-3xl p-2"> Check it on explorer!  </a>
+
         </label>
       )}
     </div>

@@ -9,8 +9,11 @@ import { RedeemTokens } from "./components/redeem-tokens";
 import { LotteryState } from "./components/LotteryState";
 import { ViewPrizePool } from "./components/view-prizepool";
 import { WithdrawFromPrizepool } from "./components/withdraw-from-prizepool";
+import { Bet } from "./components/bets";
+import useReRender from "~~/hooks/useReRender";
 const Lottery: NextPage = () => {
     const [address, setAdress] = useState("");
+    const { reRender: reRenderLotteryState, count: shouldReRender } = useReRender();
     const [tokenAddress, setTokenAddress] = useState<string | null>(null);
 
     const debugMode = process.env.NEXT_PUBLIC_CHAIN_ENV == "hardhat"
@@ -27,12 +30,13 @@ const Lottery: NextPage = () => {
                     <br />
                     <LoadContractAddress setAddress={setAdress} setTokenAddress={setTokenAddress} address={address} />
                     {address && tokenAddress && (<>
-                        <LotteryState address={address} />
+                        <LotteryState address={address} shouldReRender={shouldReRender} />
                         <BuyTokens address={address} blockExplorer={blockExplorer} />
                         <DelegateAllowance address={address} tokenAddress={tokenAddress} blockExplorer={blockExplorer} />
+                        <Bet address={address} blockExplorer={blockExplorer} reRenderLotteryState={reRenderLotteryState} />
                         <RedeemTokens address={address} blockExplorer={blockExplorer} />
-                        <ViewPrizePool address={address} />
-                        <WithdrawFromPrizepool address={address} blockExplorer={blockExplorer} />
+                        <ViewPrizePool address={address} reRenderLotteryState={reRenderLotteryState} />
+                        <WithdrawFromPrizepool address={address} blockExplorer={blockExplorer} reRenderLotteryState={reRenderLotteryState} />
                     </>)}
                 </div>
             </div>

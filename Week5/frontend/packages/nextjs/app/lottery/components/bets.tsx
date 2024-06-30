@@ -6,46 +6,56 @@ import { abi } from "../../../abi/Lottery.json"
 
 
 
-export function RedeemTokens({ address, blockExplorer }: { address: string, blockExplorer: string }) {
+export function Bet({ address, blockExplorer, reRenderLotteryState }: { address: string, blockExplorer: string, reRenderLotteryState: () => void }) {
     const [amount, setAmount] = useState("");
     const { writeContractAsync } = useWriteContract();
     const [result, setResult] = useState<string | null>(null)
     const [error, setError] = useState<String | null>(null);
-
-
-    const handleReturnTokens = async () => {
+    const handleBets = async () => {
         if (address && amount) {
-            try {
-                console.log(`Returning tokens for: ${amount} Tokens`);
+            if (amount == '1') {
+                console.log(`Bet ${amount} time`);
                 const tx = await writeContractAsync({
                     abi,
                     address: address,
-                    functionName: 'returnTokens',
-                    args: [parseEther(amount)],
-                }).catch((e: Error) => { throw e })
-                setResult(tx)
-                setError(null)
-                console.log(`tx hash: ${tx}`)
-            } catch (error) {
-                if (error instanceof Error) {
-                    console.log("ERROR occured : ", error.message)
-                    setError(error.message)
+                    functionName: 'bet',
+                }).catch((e: Error) => setError(e.message))
+                if (tx) {
+                    setResult(tx)
+                    setError(null)
+                    reRenderLotteryState();
                 }
+                console.log(`tx hash: ${tx}`)
+            } else {
+                console.log(`Bet ${amount} times`);
+                const tx = await writeContractAsync({
+                    abi,
+                    address: address,
+                    functionName: 'betMany',
+                    args: [BigInt(amount)],
+                }).catch((e: Error) => setError(e.message))
+                if (tx) {
+                    setResult(tx)
+                    setError(null)
+                    reRenderLotteryState();
+                }
+                console.log(`tx hash: ${tx}`)
             }
+
         }
     }
 
     return (
         <div className="card w-full  bg-primary text-primary-content mt-4 p-4 ">
             <div className="card-body">
-                <h2 className="card-title">Return Tokens</h2>
+                <h2 className="card-title">Bet tokens</h2>
                 <>
                     <label className="label">
-                        <span className="label-text">Enter the amount to redeem</span>
+                        <span className="label-text">Enter the amount of time to bet</span>
                     </label>
                     <input
                         type="number"
-                        placeholder="Enter the amount to redeem"
+                        placeholder="Enter the amount of times to bet"
                         className="input input-bordered w-full max-w-xs"
                         value={amount}
                         onChange={e => setAmount(e.target.value)}
@@ -58,9 +68,9 @@ export function RedeemTokens({ address, blockExplorer }: { address: string, bloc
             {!result && <button
                 className="btn btn-active btn-neutral"
                 disabled={false}
-                onClick={handleReturnTokens}
+                onClick={handleBets}
             >
-                Return Tokens !
+                Bet !
             </button>}
             {result && <label className="label flex flex-col">
                 <span className="label-text">Transaction Hash: {result} </span>
@@ -70,9 +80,10 @@ export function RedeemTokens({ address, blockExplorer }: { address: string, bloc
                         className="btn btn-active btn-neutral"
                         disabled={false}
                         onClick={() => setResult(null)}
-                    >Return tokens again</button>
+                    >Bet again</button>
                 </div>
-            </label>}
+            </label>
+            }
         </div>
     );
 }

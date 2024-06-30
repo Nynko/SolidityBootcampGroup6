@@ -1,15 +1,16 @@
 import { useEffect, useState } from "react";
+import { formatEther } from "viem";
 import { usePublicClient } from "wagmi";
 import { abi as lotteryAbi } from "~~/abi/Lottery.json";
 
 interface LotteryContractData {
   betsOpen: boolean;
-  betsClosingTime: number;
-  prizePool: number;
-  ownerPool: number;
+  betsClosingTime: Date;
+  prizePool: bigint;
+  ownerPool: bigint;
 }
 
-export function LotteryState({ address }: { address: string }) {
+export function LotteryState({ address, shouldReRender }: { address: string, shouldReRender: number }) {
   const [error, setError] = useState<string | null>(null);
   const [contractData, setContractData] = useState<LotteryContractData | null>(null);
   const [isLoading, setIsLoading] = useState(false);
@@ -19,7 +20,6 @@ export function LotteryState({ address }: { address: string }) {
     const fetchContractData = async () => {
       setIsLoading(true);
       try {
-        console.log("here")
         const [betsOpenResult, betsClosingTimeResult, prizePoolResult, ownerPoolResult] = await Promise.all([
           client?.readContract({
             abi: lotteryAbi,
@@ -42,13 +42,13 @@ export function LotteryState({ address }: { address: string }) {
             functionName: "ownerPool",
           }),
         ]);
-        console.log("here too");
+        console.log([betsOpenResult, betsClosingTimeResult, prizePoolResult, ownerPoolResult]);
 
         setContractData({
           betsOpen: typeof betsOpenResult === 'boolean' ? betsOpenResult : false,
-          betsClosingTime: typeof betsClosingTimeResult === 'number' ? betsClosingTimeResult : 0,
-          prizePool: typeof prizePoolResult === 'number' ? prizePoolResult : 0,
-          ownerPool: typeof ownerPoolResult === 'number' ? ownerPoolResult : 0,
+          betsClosingTime: typeof betsClosingTimeResult === 'bigint' ? new Date(Number(betsClosingTimeResult)) : new Date(),
+          prizePool: typeof prizePoolResult === 'bigint' ? prizePoolResult : 0n,
+          ownerPool: typeof ownerPoolResult === 'bigint' ? ownerPoolResult : 0n,
         });
       } catch (error) {
         setError("Error fetching contract data");
@@ -58,7 +58,7 @@ export function LotteryState({ address }: { address: string }) {
     };
 
     fetchContractData();
-  }, [client, address]);
+  }, [client, address, shouldReRender]);
 
   return (
     <div className="card w-full bg-primary text-primary-content mt-4 p-4 ">
@@ -74,8 +74,8 @@ export function LotteryState({ address }: { address: string }) {
           <div>
             <p>Bets Open: {contractData.betsOpen.toString()}</p>
             <p>Bets Closing Time: {contractData.betsClosingTime.toString()}</p>
-            <p>Prize Pool: {contractData.prizePool.toString()}</p>
-            <p>Owner Pool: {contractData.ownerPool.toString()}</p>
+            <p>Prize Pool: {formatEther(contractData.prizePool)}</p>
+            <p>Owner Pool: {formatEther(contractData.ownerPool)}</p>
           </div>
         ) : (
           <p>No data available yet.</p>
