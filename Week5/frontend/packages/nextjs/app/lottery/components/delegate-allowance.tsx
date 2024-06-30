@@ -11,6 +11,7 @@ const MAXUINT256 =
 export function DelegateAllowance({ address, tokenAddress, blockExplorer }: { address: string, tokenAddress: string, blockExplorer: string }) {
     const { writeContractAsync } = useWriteContract();
     const [result, setResult] = useState<string | null>(null)
+    const [error, setError] = useState<String | null>(null);
 
     const handleApprove = async () => {
         console.log("clicked");
@@ -26,10 +27,11 @@ export function DelegateAllowance({ address, tokenAddress, blockExplorer }: { ad
                 args: [address, MAXUINT256],
             }).catch((e: Error) => {
                 console.log("ERROR occured : ", e.message)
-                setResult(e.message)
+                setError(e.message)
             })
             if (tx) {
                 setResult(tx)
+                setError(null)
             }
             console.log(`tx hash: ${tx}`)
 
@@ -41,6 +43,9 @@ export function DelegateAllowance({ address, tokenAddress, blockExplorer }: { ad
             <div className="card-body">
                 <h2 className="card-title">{"Delegate allowance (approve)"}</h2>
             </div>
+            {error && (<>
+                <span className="label-text">Error: {error} </span>
+            </>)}
             {!result && <button
                 className="btn btn-active btn-neutral"
                 disabled={false}

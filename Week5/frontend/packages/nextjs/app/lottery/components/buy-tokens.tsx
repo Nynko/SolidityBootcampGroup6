@@ -10,7 +10,7 @@ export function BuyTokens({ address, blockExplorer }: { address: string, blockEx
     const [amount, setAmount] = useState("");
     const { writeContractAsync } = useWriteContract();
     const [result, setResult] = useState<string | null>(null)
-
+    const [error, setError] = useState<String | null>(null);
     const handleBuyTokens = async () => {
         if (address && amount) {
             try {
@@ -23,11 +23,12 @@ export function BuyTokens({ address, blockExplorer }: { address: string, blockEx
                     value: parseEther(amount),
                 }).catch((e: Error) => { throw e })
                 setResult(tx)
+                setError(null)
                 console.log(`tx hash: ${tx}`)
             } catch (error) {
                 if (error instanceof Error) {
                     console.log("ERROR occured : ", error.message)
-                    setResult(error.message)
+                    setError(error.message)
                 }
             }
         }
@@ -50,6 +51,9 @@ export function BuyTokens({ address, blockExplorer }: { address: string, blockEx
                     />
                 </>
             </div>
+            {error && (<>
+                <span className="label-text">Error: {error} </span>
+            </>)}
             {!result && <button
                 className="btn btn-active btn-neutral"
                 disabled={false}
@@ -59,7 +63,14 @@ export function BuyTokens({ address, blockExplorer }: { address: string, blockEx
             </button>}
             {result && <label className="label flex flex-col">
                 <span className="label-text">Transaction Hash: {result} </span>
-                <a target="_blank" href={blockExplorer + result} className="label-text hover:scale-125 bg-slate-500 rounded-3xl p-2"> Check it on explorer!  </a>
+                <div className="flex">
+                    <a target="_blank" href={blockExplorer + result} className="label-text hover:scale-125 bg-slate-500 rounded-3xl p-2"> Check it on explorer!  </a>
+                    <button
+                        className="btn btn-active btn-neutral"
+                        disabled={false}
+                        onClick={() => setResult(null)}
+                    >Buy again</button>
+                </div>
             </label>}
         </div>
     );
