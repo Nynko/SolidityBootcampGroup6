@@ -1,10 +1,13 @@
 /* eslint-disable prettier/prettier */
 import { Dispatch, SetStateAction, useState } from "react";
+import { usePublicClient } from "wagmi";
+import { abi as lotteryAbi } from "../../../../../../lottery-contract/artifacts/contracts/Lottery.sol/Lottery.json"
 
 
-export function LoadContractAddress({ address, setAddress }: { address: string, setAddress: Dispatch<SetStateAction<string>> }) {
+export function LoadContractAddress({ address, setAddress, setTokenAddress }: { address: string, setAddress: Dispatch<SetStateAction<string>>, setTokenAddress: Dispatch<SetStateAction<string | null>> }) {
     const [error, setError] = useState<string | null>(null)
     const [localAddress, setLocalAddress] = useState<string>("")
+    const client = usePublicClient();
 
     const checkSetAddress = (address: string) => {
         if (!/^0x[a-fA-F0-9]{40}$/.test(address)) {
@@ -12,6 +15,14 @@ export function LoadContractAddress({ address, setAddress }: { address: string, 
         }
         else {
             setAddress(address);
+            client?.readContract({
+                abi: lotteryAbi,
+                address: address,
+                functionName: "paymentToken",
+            }).then((addr) => setTokenAddress(addr as string)).catch((e: Error) => {
+                console.log("ERROR occured : ", e.message)
+                throw e;
+            })
         }
 
     }
