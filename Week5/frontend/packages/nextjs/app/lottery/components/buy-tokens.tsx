@@ -23,6 +23,7 @@ export function BuyTokens({ address, blockExplorer }: { address: string, blockEx
                     value: parseEther(amount),
                 }).catch((e: Error) => { throw e })
                 setResult(tx)
+                setError(null)
                 console.log(`tx hash: ${tx}`)
             } catch (error) {
                 if (error instanceof Error) {

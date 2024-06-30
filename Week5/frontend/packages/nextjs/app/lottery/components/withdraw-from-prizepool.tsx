@@ -23,6 +23,7 @@ export function WithdrawFromPrizepool({ address, blockExplorer, reRenderLotteryS
           throw e;
         });
         setResult(tx);
+        setError(null)
         reRenderLotteryState();
         console.log(`tx hash: ${tx}`);
       } catch (error) {

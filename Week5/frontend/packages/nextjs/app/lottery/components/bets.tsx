@@ -22,6 +22,7 @@ export function Bet({ address, blockExplorer, reRenderLotteryState }: { address:
                 }).catch((e: Error) => setError(e.message))
                 if (tx) {
                     setResult(tx)
+                    setError(null)
                     reRenderLotteryState();
                 }
                 console.log(`tx hash: ${tx}`)
@@ -35,6 +36,7 @@ export function Bet({ address, blockExplorer, reRenderLotteryState }: { address:
                 }).catch((e: Error) => setError(e.message))
                 if (tx) {
                     setResult(tx)
+                    setError(null)
                     reRenderLotteryState();
                 }
                 console.log(`tx hash: ${tx}`)

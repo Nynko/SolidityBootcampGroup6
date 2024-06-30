@@ -24,6 +24,7 @@ export function RedeemTokens({ address, blockExplorer }: { address: string, bloc
                     args: [parseEther(amount)],
                 }).catch((e: Error) => { throw e })
                 setResult(tx)
+                setError(null)
                 console.log(`tx hash: ${tx}`)
             } catch (error) {
                 if (error instanceof Error) {

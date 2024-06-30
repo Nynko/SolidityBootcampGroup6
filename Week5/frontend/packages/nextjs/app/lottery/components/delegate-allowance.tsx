@@ -31,6 +31,7 @@ export function DelegateAllowance({ address, tokenAddress, blockExplorer }: { ad
             })
             if (tx) {
                 setResult(tx)
+                setError(null)
             }
             console.log(`tx hash: ${tx}`)
 

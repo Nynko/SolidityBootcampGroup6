@@ -24,6 +24,7 @@ export function ViewPrizePool({ address, reRenderLotteryState }: { address: stri
       }) as bigint;
 
     setPrizePool(prizePool);
+    setError(null)
     reRenderLotteryState();
     console.log(prizePool);
   };
