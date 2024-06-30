@@ -8,6 +8,7 @@ export function WithdrawFromPrizepool({ address, blockExplorer }: { address: str
   const [amount, setAmount] = useState("");
   const { writeContractAsync } = useWriteContract();
   const [result, setResult] = useState<string | null>(null);
+  const [error, setError] = useState<String | null>(null);
 
   const handleWithdrawFromPrizePool = async () => {
     if (address && amount) {
@@ -26,7 +27,7 @@ export function WithdrawFromPrizepool({ address, blockExplorer }: { address: str
       } catch (error) {
         if (error instanceof Error) {
           console.log("ERROR occured : ", error.message);
-          setResult(error.message);
+          setError(error.message);
         }
       }
     }
@@ -49,6 +50,9 @@ export function WithdrawFromPrizepool({ address, blockExplorer }: { address: str
           />
         </>
       </div>
+      {error && (<>
+        <span className="label-text">Error: {error} </span>
+      </>)}
       {!result && (
         <button className="btn btn-active btn-neutral" disabled={false} onClick={handleWithdrawFromPrizePool}>
           Return Tokens !

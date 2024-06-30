@@ -10,6 +10,7 @@ export function RedeemTokens({ address, blockExplorer }: { address: string, bloc
     const [amount, setAmount] = useState("");
     const { writeContractAsync } = useWriteContract();
     const [result, setResult] = useState<string | null>(null)
+    const [error, setError] = useState<String | null>(null);
 
 
     const handleReturnTokens = async () => {
@@ -27,7 +28,7 @@ export function RedeemTokens({ address, blockExplorer }: { address: string, bloc
             } catch (error) {
                 if (error instanceof Error) {
                     console.log("ERROR occured : ", error.message)
-                    setResult(error.message)
+                    setError(error.message)
                 }
             }
         }
@@ -50,6 +51,9 @@ export function RedeemTokens({ address, blockExplorer }: { address: string, bloc
                     />
                 </>
             </div>
+            {error && (<>
+                <span className="label-text">Error: {error} </span>
+            </>)}
             {!result && <button
                 className="btn btn-active btn-neutral"
                 disabled={false}

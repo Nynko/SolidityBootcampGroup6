@@ -10,7 +10,7 @@ export function Bet({ address, blockExplorer }: { address: string, blockExplorer
     const [amount, setAmount] = useState("");
     const { writeContractAsync } = useWriteContract();
     const [result, setResult] = useState<string | null>(null)
-
+    const [error, setError] = useState<String | null>(null);
     const handleBets = async () => {
         if (address && amount) {
             if (amount == '1') {
@@ -19,7 +19,7 @@ export function Bet({ address, blockExplorer }: { address: string, blockExplorer
                     abi,
                     address: address,
                     functionName: 'bet',
-                }).catch((e: Error) => setResult(e.message))
+                }).catch((e: Error) => setError(e.message))
                 if (tx) {
                     setResult(tx)
                 }
@@ -31,7 +31,7 @@ export function Bet({ address, blockExplorer }: { address: string, blockExplorer
                     address: address,
                     functionName: 'betMany',
                     args: [BigInt(amount)],
-                }).catch((e: Error) => setResult(e.message))
+                }).catch((e: Error) => setError(e.message))
                 if (tx) {
                     setResult(tx)
                 }
@@ -58,6 +58,9 @@ export function Bet({ address, blockExplorer }: { address: string, blockExplorer
                     />
                 </>
             </div>
+            {error && (<>
+                <span className="label-text">Error: {error} </span>
+            </>)}
             {!result && <button
                 className="btn btn-active btn-neutral"
                 disabled={false}

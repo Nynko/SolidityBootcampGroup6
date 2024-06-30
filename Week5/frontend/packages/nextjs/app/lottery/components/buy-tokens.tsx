@@ -10,7 +10,7 @@ export function BuyTokens({ address, blockExplorer }: { address: string, blockEx
     const [amount, setAmount] = useState("");
     const { writeContractAsync } = useWriteContract();
     const [result, setResult] = useState<string | null>(null)
-
+    const [error, setError] = useState<String | null>(null);
     const handleBuyTokens = async () => {
         if (address && amount) {
             try {
@@ -27,7 +27,7 @@ export function BuyTokens({ address, blockExplorer }: { address: string, blockEx
             } catch (error) {
                 if (error instanceof Error) {
                     console.log("ERROR occured : ", error.message)
-                    setResult(error.message)
+                    setError(error.message)
                 }
             }
         }
@@ -50,6 +50,9 @@ export function BuyTokens({ address, blockExplorer }: { address: string, blockEx
                     />
                 </>
             </div>
+            {error && (<>
+                <span className="label-text">Error: {error} </span>
+            </>)}
             {!result && <button
                 className="btn btn-active btn-neutral"
                 disabled={false}
