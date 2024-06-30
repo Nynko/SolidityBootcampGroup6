@@ -5,7 +5,7 @@ import type { NextPage } from "next";
 import { useAccount } from "wagmi";
 import { BugAntIcon, CurrencyDollarIcon, MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 import { Address } from "~~/components/scaffold-eth";
-
+import {LotteryState} from "~~/components/LotteryState";
 const Home: NextPage = () => {
   const { address: connectedAddress } = useAccount();
   const debugMode = process.env.NEXT_PUBLIC_CHAIN_ENV == "hardhat";
@@ -17,6 +17,7 @@ const Home: NextPage = () => {
             <span className="block text-2xl mb-2">Welcome to</span>
             <span className="block text-4xl font-bold">Lottery App</span>
           </h1>
+     <LotteryState />
           <div className="flex justify-center items-center space-x-2 flex-col sm:flex-row">
             <p className="my-2 font-medium">Connected Address:</p>
             <Address address={connectedAddress} />

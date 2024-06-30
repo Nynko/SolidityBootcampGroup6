@@ -6,6 +6,8 @@ import { BuyTokens } from "./components/buy-tokens";
 import { useState } from "react";
 import { DelegateAllowance } from "./components/delegate-allowance";
 import { RedeemTokens } from "./components/redeem-tokens";
+import {LotteryState} from "~~/components/LotteryState";
+
 const Lottery: NextPage = () => {
     const [address, setAdress] = useState("");
     const [tokenAddress, setTokenAddress] = useState<string | null>(null);
@@ -25,6 +27,7 @@ const Lottery: NextPage = () => {
                         Lottery
                         <br /> Check{" "}
                     </p>
+                    <LotteryState />
 
                     <LoadContractAddress setAddress={setAdress} setTokenAddress={setTokenAddress} address={address} />
                     {address && tokenAddress && (<>
