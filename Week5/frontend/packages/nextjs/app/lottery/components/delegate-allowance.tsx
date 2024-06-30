@@ -8,29 +8,15 @@ import { abi as lotteryAbi } from "../../../../../../lottery-contract/artifacts/
 const MAXUINT256 =
     115792089237316195423570985008687907853269984665640564039457584007913129639935n;
 
-export function DelegateAllowance({ address, blockExplorer }: { address: string, blockExplorer: string }) {
+export function DelegateAllowance({ address, tokenAddress, blockExplorer }: { address: string, tokenAddress: string, blockExplorer: string }) {
     const { writeContractAsync } = useWriteContract();
     const [result, setResult] = useState<string | null>(null)
-    const [tokenAddress, setTokenAddress] = useState<string | null>(null);
-    const client = usePublicClient();
-
-    useEffect(
-        () => {
-            client?.readContract({
-                abi: lotteryAbi,
-                address: address,
-                functionName: "paymentToken",
-            }).then((addr) => setTokenAddress(addr as string)).catch((e: Error) => {
-                console.log("ERROR occured : ", e.message)
-                setResult(`When getting the token address: ${e.message}`)
-            })
-
-        }, [address]
-    )
-
-
 
     const handleApprove = async () => {
+        console.log("clicked");
+        console.log(tokenAddress);
+
+
         if (tokenAddress) {
             console.log(`Approve allowance of any amount of tokens`);
             const tx = await writeContractAsync({
