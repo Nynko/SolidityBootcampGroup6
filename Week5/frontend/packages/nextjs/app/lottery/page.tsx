@@ -12,6 +12,7 @@ import { WithdrawFromPrizepool } from "./components/withdraw-from-prizepool";
 import { Bet } from "./components/bets";
 import useReRender from "~~/hooks/useReRender";
 import { CloseLottery } from "./components/close-lottery";
+import {CheckWinnings} from "./components/check-winnings";
 const Lottery: NextPage = () => {
     const [address, setAdress] = useState("");
     const { reRender: reRenderLotteryState, count: shouldReRender } = useReRender();
@@ -38,6 +39,7 @@ const Lottery: NextPage = () => {
                         <CloseLottery address={address} blockExplorer={blockExplorer} reRenderLotteryState={reRenderLotteryState} />
                         <RedeemTokens address={address} blockExplorer={blockExplorer} />
                         <ViewPrizePool address={address} reRenderLotteryState={reRenderLotteryState} />
+                        <CheckWinnings address={address} reRenderLotteryState={reRenderLotteryState} />
                         <WithdrawFromPrizepool address={address} blockExplorer={blockExplorer} reRenderLotteryState={reRenderLotteryState} />
                     </>)}
                 </div>
