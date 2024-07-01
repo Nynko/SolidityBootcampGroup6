@@ -46,7 +46,7 @@ export function LotteryState({ address, shouldReRender }: { address: string, sho
 
         setContractData({
           betsOpen: typeof betsOpenResult === 'boolean' ? betsOpenResult : false,
-          betsClosingTime: typeof betsClosingTimeResult === 'bigint' ? new Date(Number(betsClosingTimeResult)) : new Date(),
+          betsClosingTime: typeof betsClosingTimeResult === 'bigint' ? new Date(Number(betsClosingTimeResult * 1000n)) : new Date(),
           prizePool: typeof prizePoolResult === 'bigint' ? prizePoolResult : 0n,
           ownerPool: typeof ownerPoolResult === 'bigint' ? ownerPoolResult : 0n,
         });
