@@ -1,11 +1,10 @@
 /* eslint-disable prettier/prettier */
 import { useEffect, useState } from "react";
 import { abi as lotteryAbi } from "../../../abi/Lottery.json";
-import { formatEther, hexToBigInt, hexToString, parseEther, toHex } from "viem";
+import { parseEther, toHex } from "viem";
 import { usePublicClient, useWriteContract } from "wagmi";
-import { parse } from "path";
-
-export function OpenBets({ address }: { address: string,  }) {
+ 
+export function LotteryAdmin({ address }: { address: string,  }) {
    const [error, setError] = useState<String | null>(null);
   const [isOwner, setIsOwner] = useState<boolean>(false);   
   const { writeContractAsync } = useWriteContract();
@@ -45,7 +44,7 @@ const transformDateToTimestamp = () => {
 
   const openBets = async () => {
     console.log(`open the bets`);
-    const tx = await writeContractAsync({
+    const tx = await writeContractAsync({ 
       abi: lotteryAbi,
       address: address,
       functionName: 'openBets',
@@ -79,12 +78,12 @@ const transformDateToTimestamp = () => {
 
 
   return (
-    !isOwner ? <div className="card w-full  bg-primary text-primary-content mt-4 p-4 ">
-      <div className="card-body"> 
-        <h2 className="card-title">{"Open Bets"}</h2>
-      </div>
-      <div>
-            <label className="label">
+     isOwner ? <div className="card w-full  bg-primary text-primary-content mt-4 p-4 ">
+      <h1 className="card-title text-3xl mb-16 ">Admin pannel</h1>
+      <div className="flex flex-row gap-16"> 
+               <div className="flex flex-col">
+ <h2 className="card-title">{"Open Bets"}</h2>
+            <label className="label flex flex-col items-start">
                 Select a date:
                 <input
                     type="date"
@@ -92,26 +91,29 @@ const transformDateToTimestamp = () => {
                     onChange={(e) => setSelectedDate(new Date(e.target.value))}
                 />
             </label>
-        </div>
     
-        <button className="btn btn-active btn-neutral"  onClick={openBets}>
+        <button className="btn btn-active btn-neutral max-w-64"  onClick={openBets}>
           Open Bets
-        </button>
-        <h2 className="card-title">Withdraw Tokens</h2>
+        </button>    
+            </div>
+
+        <div className="flex flex-col gap-4"> 
+        <h2 className="card-title ">Withdraw Tokens</h2>
                
                     <label className="label">
                         <span className="label-text">Enter the amount to withdraw</span>
                     </label>
                     <input
                         type="number"
-                        placeholder="Enter the amount to buy"
+                        placeholder="Enter the amount to withdraw"
                         className="input input-bordered w-full max-w-xs"
                         value={amount}
                         onChange={e => setAmount(e.target.value)}
                     />
-                        <button className="btn btn-active btn-neutral"  onClick={withdrawFees}>
+          <button className="btn btn-active btn-neutral max-w-64"  onClick={withdrawFees}>
           Withdraw
-        </button>
+        </button></div>
+        </div> 
       {
         error && (
           <label className="label flex flex-col">
