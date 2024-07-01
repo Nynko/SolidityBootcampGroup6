@@ -57,7 +57,7 @@ export function WithdrawFromPrizepool({ address, blockExplorer, reRenderLotteryS
       </>)}
       {!result && (
         <button className="btn btn-active btn-neutral" disabled={false} onClick={handleWithdrawFromPrizePool}>
-          Return Tokens !
+          Withdraw Winnings !
         </button>
       )}
       {result && (
