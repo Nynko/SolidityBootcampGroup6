@@ -11,8 +11,10 @@ import { ViewPrizePool } from "./components/view-prizepool";
 import { WithdrawFromPrizepool } from "./components/withdraw-from-prizepool";
 import { Bet } from "./components/bets";
 import useReRender from "~~/hooks/useReRender";
+import { LotteryAdmin } from "./components/LotteryAdmin";
 import { CloseLottery } from "./components/close-lottery";
 import {CheckWinnings} from "./components/check-winnings";
+
 const Lottery: NextPage = () => {
     const [address, setAdress] = useState("");
     const { reRender: reRenderLotteryState, count: shouldReRender } = useReRender();
@@ -33,6 +35,7 @@ const Lottery: NextPage = () => {
                     <LoadContractAddress setAddress={setAdress} setTokenAddress={setTokenAddress} address={address} />
                     {address && tokenAddress && (<>
                         <LotteryState address={address} shouldReRender={shouldReRender} />
+                        <LotteryAdmin address={address}  />
                         <BuyTokens address={address} blockExplorer={blockExplorer} />
                         <DelegateAllowance address={address} tokenAddress={tokenAddress} blockExplorer={blockExplorer} />
                         <Bet address={address} blockExplorer={blockExplorer} reRenderLotteryState={reRenderLotteryState} />
