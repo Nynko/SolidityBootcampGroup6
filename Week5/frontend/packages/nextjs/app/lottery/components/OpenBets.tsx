@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { abi as lotteryAbi } from "../../../abi/Lottery.json";
 import { formatEther, hexToBigInt, hexToString, parseEther, toHex } from "viem";
 import { usePublicClient, useWriteContract } from "wagmi";
+import { parse } from "path";
 
 export function OpenBets({ address }: { address: string,  }) {
    const [error, setError] = useState<String | null>(null);
@@ -11,7 +12,7 @@ export function OpenBets({ address }: { address: string,  }) {
 
   const client = usePublicClient();
   const [selectedDate, setSelectedDate] = useState<Date | null>();
-
+  const [amount, setAmount] = useState<string>("");
 const transformDateToTimestamp = () => {
     const timestamp = selectedDate ? Math.floor(selectedDate.getTime() / 1000) : 0;     
       console.log(timestamp);
@@ -43,7 +44,7 @@ const transformDateToTimestamp = () => {
 
 
   const openBets = async () => {
-    console.log(`View total prize pool`);
+    console.log(`open the bets`);
     const tx = await writeContractAsync({
       abi: lotteryAbi,
       address: address,
@@ -58,12 +59,27 @@ const transformDateToTimestamp = () => {
      setError(null)
      
    };
-
+   const withdrawFees = async () => {
+    console.log(`withdraw the fees`);
+    const tx = await writeContractAsync({
+      abi: lotteryAbi,
+      address: address,
+      functionName: 'ownerWithdraw',
+      args: [parseEther(amount)],
+      })
+      .catch((e: Error) => {
+        console.log("ERROR occured : ", e.message);
+        setError(e.message);
+      })
+      console.log(`tx hash: ${tx}`);  
+     setError(null)
+     
+   };
   
 
 
   return (
-    isOwner ? <div className="card w-full  bg-primary text-primary-content mt-4 p-4 ">
+    !isOwner ? <div className="card w-full  bg-primary text-primary-content mt-4 p-4 ">
       <div className="card-body"> 
         <h2 className="card-title">{"Open Bets"}</h2>
       </div>
@@ -81,7 +97,21 @@ const transformDateToTimestamp = () => {
         <button className="btn btn-active btn-neutral"  onClick={openBets}>
           Open Bets
         </button>
-        
+        <h2 className="card-title">Withdraw Tokens</h2>
+               
+                    <label className="label">
+                        <span className="label-text">Enter the amount to withdraw</span>
+                    </label>
+                    <input
+                        type="number"
+                        placeholder="Enter the amount to buy"
+                        className="input input-bordered w-full max-w-xs"
+                        value={amount}
+                        onChange={e => setAmount(e.target.value)}
+                    />
+                        <button className="btn btn-active btn-neutral"  onClick={withdrawFees}>
+          Withdraw
+        </button>
       {
         error && (
           <label className="label flex flex-col">
