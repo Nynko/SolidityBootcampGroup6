@@ -13,6 +13,9 @@ import {
   import { load_account_from_env, load_api_sepolia } from "../utils/load_env";
   import {abi} from "../artifacts/contracts/TokenizedBallot.sol/TokenizedBallot.json";
 
+
+const TOKENIZED_BALLOT_CONTRACT_ADDRESS = "0x72F186E758Dd0e9F983CA16a51307E750DBc4eD8";
+
   export async function castVote(
     contract: `0x${string}`,
     proposal: bigint, 
