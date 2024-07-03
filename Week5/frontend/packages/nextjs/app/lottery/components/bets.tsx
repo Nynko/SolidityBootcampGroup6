@@ -1,14 +1,22 @@
 /* eslint-disable prettier/prettier */
-import { useState } from "react";
-import { hexToBigInt, parseEther, toHex, hexToString } from "viem";
+import { useEffect, useState } from "react";
+import { hexToBigInt, parseEther, toHex, hexToString, formatEther } from "viem";
 import { usePublicClient, useWriteContract } from "wagmi";
 import { abi } from "../../../abi/Lottery.json"
 
 
+interface BetData {
+    betPrice: string,
+    betFee: string,
+    tokenRatio: bigint
+}
+
 
 export function Bet({ address, blockExplorer, reRenderLotteryState }: { address: string, blockExplorer: string, reRenderLotteryState: () => void }) {
     const [amount, setAmount] = useState("");
+    const [betData, setBetData] = useState<BetData | null>(null);
     const { writeContractAsync } = useWriteContract();
+    const publicClient = usePublicClient();
     const [result, setResult] = useState<string | null>(null)
     const [error, setError] = useState<String | null>(null);
     const handleBets = async () => {
@@ -45,6 +53,29 @@ export function Bet({ address, blockExplorer, reRenderLotteryState }: { address:
         }
     }
 
+    useEffect(() => {
+
+        const fetchData = async () => {
+            try {
+                const [betPrice, betFee, purchaseRatio] = await Promise.all([
+                    publicClient?.readContract({ abi, address: address, functionName: "betPrice" }) ?? Promise.resolve(0),
+                    publicClient?.readContract({ abi, address: address, functionName: "betFee" }) ?? Promise.resolve(0),
+                    publicClient?.readContract({ abi, address: address, functionName: "purchaseRatio" }) ?? Promise.resolve(0),
+                ]);
+
+                setBetData({
+                    betPrice: formatEther(betPrice as bigint),
+                    betFee: formatEther(betFee as bigint),
+                    tokenRatio: purchaseRatio as bigint
+                });
+            } catch (e) {
+                setError((e as Error).message);
+            }
+
+        }
+        fetchData();
+    }, [address])
+
     return (
         <div className="card w-full  bg-primary text-primary-content mt-4 p-4 ">
             <div className="card-body">
@@ -52,6 +83,8 @@ export function Bet({ address, blockExplorer, reRenderLotteryState }: { address:
                 <>
                     <label className="label">
                         <span className="label-text">Enter the amount of time to bet</span>
+                        <span className="label-text">1 ETH = {betData?.tokenRatio.toString()} tokens</span>
+                        <span className="label-text"> 1 Bet = {betData?.betPrice} + {betData?.betFee} (fees) tokens</span>
                     </label>
                     <input
                         type="number"

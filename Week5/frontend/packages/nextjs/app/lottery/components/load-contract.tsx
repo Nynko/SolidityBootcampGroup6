@@ -7,7 +7,7 @@ import { useDeployedContractInfo } from "~~/hooks/scaffold-eth";
 
 export function LoadContractAddress({ address, setAddress, setTokenAddress }: { address: string, setAddress: Dispatch<SetStateAction<string>>, setTokenAddress: Dispatch<SetStateAction<string | null>> }) {
     const [error, setError] = useState<string | null>(null)
-    const [localAddress, setLocalAddress] = useState<string>("")
+    const [localAddress, setLocalAddress] = useState<string>("0x707e39cefede2c48a82b64b14347820011852146")
     const client = usePublicClient();
     const { data: deployedContractData, isLoading: deployedContractLoading } = useDeployedContractInfo("Lottery");
 
@@ -57,7 +57,7 @@ export function LoadContractAddress({ address, setAddress, setTokenAddress }: { 
                         </label>
                         <input
                             type="text"
-                            placeholder="Contract Address"
+                            placeholder="0x707e39cefede2c48a82b64b14347820011852146"
                             className="input input-bordered w-full "
                             value={localAddress}
                             onChange={e => setLocalAddress(e.target.value)}

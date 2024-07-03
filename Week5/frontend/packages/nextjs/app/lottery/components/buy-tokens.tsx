@@ -1,5 +1,5 @@
 /* eslint-disable prettier/prettier */
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { hexToBigInt, parseEther, toHex, hexToString } from "viem";
 import { usePublicClient, useWriteContract } from "wagmi";
 import { abi } from "../../../abi/Lottery.json"
@@ -8,6 +8,8 @@ import { abi } from "../../../abi/Lottery.json"
 
 export function BuyTokens({ address, blockExplorer }: { address: string, blockExplorer: string }) {
     const [amount, setAmount] = useState("");
+    const [tokenRatio, setTokenRatio] = useState(0);
+    const publicClient = usePublicClient();
     const { writeContractAsync } = useWriteContract();
     const [result, setResult] = useState<string | null>(null)
     const [error, setError] = useState<String | null>(null);
@@ -34,6 +36,15 @@ export function BuyTokens({ address, blockExplorer }: { address: string, blockEx
         }
     }
 
+    useEffect(() => {
+
+        const fetchData = async () => {
+            await publicClient?.readContract({ abi, address: address, functionName: "purchaseRatio" }).catch(
+                (e) => setError(e.message)).then((res) => setTokenRatio(Number(res)));
+        }
+        fetchData();
+    }, [address])
+
     return (
         <div className="card w-full  bg-primary text-primary-content mt-4 p-4 ">
             <div className="card-body">
@@ -41,6 +52,7 @@ export function BuyTokens({ address, blockExplorer }: { address: string, blockEx
                 <>
                     <label className="label">
                         <span className="label-text">Enter the amount to buy</span>
+                        <span className="label-text">1 ETH = {tokenRatio} Tokens</span>
                     </label>
                     <input
                         type="number"
