@@ -2,7 +2,7 @@
 import { useEffect, useState } from "react";
 import { abi as lotteryAbi } from "../../../abi/Lottery.json";
 import { parseEther, toHex } from "viem";
-import { usePublicClient, useWriteContract } from "wagmi";
+import { useAccount, usePublicClient, useWriteContract } from "wagmi";
  
 export function LotteryAdmin({ address }: { address: string,  }) {
    const [error, setError] = useState<String | null>(null);
@@ -10,6 +10,7 @@ export function LotteryAdmin({ address }: { address: string,  }) {
   const { writeContractAsync } = useWriteContract();
 
   const client = usePublicClient();
+  const account = useAccount();
   const [selectedDate, setSelectedDate] = useState<Date | null>();
   const [amount, setAmount] = useState<string>("");
 const transformDateToTimestamp = () => {
@@ -34,7 +35,7 @@ const transformDateToTimestamp = () => {
           setError(e.message);
         }) as string;
       console.log("THE OWNER IS : ", owner);
-      setIsOwner(owner === client?.account);
+      setIsOwner(owner === account.address);
       setError(null);
     };
     checkOwner();
