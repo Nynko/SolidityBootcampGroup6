@@ -42,7 +42,9 @@ const deployYourContract: DeployFunction = async function (hre: HardhatRuntimeEn
 
   // Get the deployed contract to interact with it after deploying.
   const yourContract = await hre.ethers.getContract<Contract>("Lottery", deployer);
-  // console.log("👋 Initial greeting:", await yourContract.greeting());
+
+  const currentTimestamp = Math.floor(Date.now() / 1000);
+  await yourContract.openBets(currentTimestamp + 1000);
 };
 
 export default deployYourContract;
