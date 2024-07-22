@@ -1,0 +1,3 @@
+[submodule "EternalChat"]
+	path = EternalChat
+	url = git@github.com:911-Benedek-RobertGeorge/EternalChat.git
